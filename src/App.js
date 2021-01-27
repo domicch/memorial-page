@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Route, Switch } from 'react-router-dom';
 
-import Layout from './hoc/Layout/Layout';
+import MUILayout from './hoc/Layouts/Layout'
 import LifeReview from './containers/LifeReview/LifeReview';
 import Messages from './containers/Messages/Messages'
 
@@ -17,9 +17,12 @@ class App extends Component {
 
     return (
       <div>
-        <Layout>
+        {/* <Layout>
           {routes}
-        </Layout>
+        </Layout> */}
+        <MUILayout>
+          {routes}
+        </MUILayout>
       </div>
     );
   }

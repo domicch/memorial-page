@@ -1,52 +1,46 @@
 import React, { Component } from 'react';
-import Message from '../../components/Message/Message';
+import Article from '../../components/Article/Article';
 
-import {Grid} from '@material-ui/core';
-
-class Messages extends Component {
+class ArticleItems extends Component {
     state = {
-        messages: [
+        articleItems: [
             {
                 id: '1',
-                author: 'John Doe',
+                type: 'article',
+                title: '青葱歲月',
                 content: '另外，孫在香港西醫書院中讀書時，常當眾倡言反清，聞者多膽怯走避，與陳少白、尢列、楊鶴齡三人常住香港，「聽夕往還，所談者莫不為革命之言論，所懷者莫不為革命之思想，所研究者莫不為革命之問題。四人相依甚密，非談革命則無以為歡，數年如一日。故港澳間之戚友交遊，皆呼予等為『四大寇』」[17]。\n\n清政府公文中，皆在其名字「文」上加上三點水部首，貶稱其為「孫汶」。“汶汶”一詞，出自《史記·屈原賈生列傳》：“人又誰能以身之察察，受物之汶汶者乎？”《史記索隱》說“汶汶，猶昏暗也”，《史記集解》引王逸說是“蒙垢污”，或說“玷污也”。通常清政府對於犯人其在名字旁會多加水字旁部首，以視為江洋草莽大盜，如刺殺馬新貽的「張文祥」被稱為「張汶祥」。 '
             },
             {
                 id: '2',
-                author: 'Bravo Chan',
+                type: 'article',
+                title: '成家立室',
                 content: '另外，孫在香港西醫書院中讀書時，常當眾倡言反清，聞者多膽怯走避，與陳少白、尢列、楊鶴齡三人常住香港，「聽夕往還，所談者莫不為革命之言論，所懷者莫不為革命之思想，所研究者莫不為革命之問題。四人相依甚密，非談革命則無以為歡，數年如一日。故港澳間之戚友交遊，皆呼予等為『四大寇』」[17]。\n\n清政府公文中，皆在其名字「文」上加上三點水部首，貶稱其為「孫汶」。“汶汶”一詞，出自《史記·屈原賈生列傳》：“人又誰能以身之察察，受物之汶汶者乎？”《史記索隱》說“汶汶，猶昏暗也”，《史記集解》引王逸說是“蒙垢污”，或說“玷污也”。通常清政府對於犯人其在名字旁會多加水字旁部首，以視為江洋草莽大盜，如刺殺馬新貽的「張文祥」被稱為「張汶祥」。 '
             },
             {
                 id: '3',
-                author: '陳大文',
+                type: 'article',
                 content: '另外，孫在香港西醫書院中讀書時，常當眾倡言反清，聞者多膽怯走避，與陳少白、尢列、楊鶴齡三人常住香港，「聽夕往還，所談者莫不為革命之言論，所懷者莫不為革命之思想，所研究者莫不為革命之問題。四人相依甚密，非談革命則無以為歡，數年如一日。故港澳間之戚友交遊，皆呼予等為『四大寇』」[17]。\n\n清政府公文中，皆在其名字「文」上加上三點水部首，貶稱其為「孫汶」。“汶汶”一詞，出自《史記·屈原賈生列傳》：“人又誰能以身之察察，受物之汶汶者乎？”《史記索隱》說“汶汶，猶昏暗也”，《史記集解》引王逸說是“蒙垢污”，或說“玷污也”。通常清政府對於犯人其在名字旁會多加水字旁部首，以視為江洋草莽大盜，如刺殺馬新貽的「張文祥」被稱為「張汶祥」。 '
             },
         ]
     };
 
     render() {
-        const messages = [];
+        const articleItems = [];
 
-        if (this.state.messages) {
-            this.state.messages.map(
-                message => {
-                    messages.push((
-                        <Message key={message.id} {...message} />
-                    ));
+        if (this.state.articleItems) {
+            this.state.articleItems.map(
+                article => {
+                    if(article.type === 'article'){
+                        articleItems.push((
+                            <Article key={article.id} {...article} />
+                        ));
+                    }
                 }
-            );
+            )
         }
 
-        return (
-            <Grid container justify="center">
-                <Grid item xs={12} md={8}>
-                    {messages}
-                </Grid>
-            </Grid>
-        );
-
-
+        return articleItems;
     }
 }
 
-export default Messages;
+export default ArticleItems;
