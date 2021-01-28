@@ -15,7 +15,7 @@ const StyledTabs = withStyles({
       width: '100%',
       backgroundColor: 'black',
     },
-  },
+  }
 })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
 
 const StyledTab = withStyles((theme) => ({
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
     padding: {
-      padding: theme.spacing(3),
+      padding: theme.spacing(1),
     },
   //   demo1: {
   //     backgroundColor: theme.palette.background.paper,
@@ -51,23 +51,15 @@ export default function Toolbar() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    console.log(newValue);
     setValue(newValue);
   };
 
-  const navLink = (
-    <Link 
-          to="/" exact
-      >
-          Life
-      </Link>
-  );
-
   return (
     <div className={classes.demo2}>
-      <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
+      <StyledTabs value={value} onChange={handleChange}>
         <StyledTab label="Life" component={Link} to="/"/>
         <StyledTab label="Messages" component={Link} to="/messages"/>
+        <StyledTab label="New Message" component={Link} to="/newmessage"/>
       </StyledTabs>
       <Typography className={classes.padding} />
     </div>

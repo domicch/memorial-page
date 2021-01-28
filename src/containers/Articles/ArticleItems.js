@@ -1,41 +1,27 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+
 import Article from '../../components/Article/Article';
+import axios from '../../network/axios';
+import withErrorHandler from '../../hoc/ErrorHandler/withErrorHandler';
+import * as actions from '../../store/actions/index';
+
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class ArticleItems extends Component {
-    state = {
-        articleItems: [
-            {
-                id: '1',
-                type: 'article',
-                title: '青葱歲月',
-                content: '另外，孫在香港西醫書院中讀書時，常當眾倡言反清，聞者多膽怯走避，與陳少白、尢列、楊鶴齡三人常住香港，「聽夕往還，所談者莫不為革命之言論，所懷者莫不為革命之思想，所研究者莫不為革命之問題。四人相依甚密，非談革命則無以為歡，數年如一日。故港澳間之戚友交遊，皆呼予等為『四大寇』」[17]。\n\n清政府公文中，皆在其名字「文」上加上三點水部首，貶稱其為「孫汶」。“汶汶”一詞，出自《史記·屈原賈生列傳》：“人又誰能以身之察察，受物之汶汶者乎？”《史記索隱》說“汶汶，猶昏暗也”，《史記集解》引王逸說是“蒙垢污”，或說“玷污也”。通常清政府對於犯人其在名字旁會多加水字旁部首，以視為江洋草莽大盜，如刺殺馬新貽的「張文祥」被稱為「張汶祥」。 '
-            },
-            {
-                id: '2',
-                type: 'article',
-                title: '成家立室',
-                content: '另外，孫在香港西醫書院中讀書時，常當眾倡言反清，聞者多膽怯走避，與陳少白、尢列、楊鶴齡三人常住香港，「聽夕往還，所談者莫不為革命之言論，所懷者莫不為革命之思想，所研究者莫不為革命之問題。四人相依甚密，非談革命則無以為歡，數年如一日。故港澳間之戚友交遊，皆呼予等為『四大寇』」[17]。\n\n清政府公文中，皆在其名字「文」上加上三點水部首，貶稱其為「孫汶」。“汶汶”一詞，出自《史記·屈原賈生列傳》：“人又誰能以身之察察，受物之汶汶者乎？”《史記索隱》說“汶汶，猶昏暗也”，《史記集解》引王逸說是“蒙垢污”，或說“玷污也”。通常清政府對於犯人其在名字旁會多加水字旁部首，以視為江洋草莽大盜，如刺殺馬新貽的「張文祥」被稱為「張汶祥」。 '
-            },
-            {
-                id: '3',
-                type: 'article',
-                content: '另外，孫在香港西醫書院中讀書時，常當眾倡言反清，聞者多膽怯走避，與陳少白、尢列、楊鶴齡三人常住香港，「聽夕往還，所談者莫不為革命之言論，所懷者莫不為革命之思想，所研究者莫不為革命之問題。四人相依甚密，非談革命則無以為歡，數年如一日。故港澳間之戚友交遊，皆呼予等為『四大寇』」[17]。\n\n清政府公文中，皆在其名字「文」上加上三點水部首，貶稱其為「孫汶」。“汶汶”一詞，出自《史記·屈原賈生列傳》：“人又誰能以身之察察，受物之汶汶者乎？”《史記索隱》說“汶汶，猶昏暗也”，《史記集解》引王逸說是“蒙垢污”，或說“玷污也”。通常清政府對於犯人其在名字旁會多加水字旁部首，以視為江洋草莽大盜，如刺殺馬新貽的「張文祥」被稱為「張汶祥」。 '
-            },
-        ]
-    };
+    componentDidMount() {
+        this.props.onGetLifeReview();
+    }
 
     render() {
-        const articleItems = [];
+        let articleItems = null;
 
-        if (this.state.articleItems) {
-            this.state.articleItems.map(
-                article => {
-                    if(article.type === 'article'){
-                        articleItems.push((
-                            <Article key={article.id} {...article} />
-                        ));
-                    }
-                }
+        if(this.props.loading){
+            articleItems = <Spinner/>
+        }
+        else if (this.props.articleItems) {
+            articleItems = this.props.articleItems.map(
+                article => <Article key={article.id} {...article} />
             )
         }
 
@@ -43,4 +29,17 @@ class ArticleItems extends Component {
     }
 }
 
-export default ArticleItems;
+const mapStateToProps = state => {
+    return {
+        articleItems: state.lifeReview.articleItems,
+        loading: state.lifeReview.loading
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onGetLifeReview: () => dispatch(actions.getLifeReview())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (withErrorHandler(ArticleItems, axios));

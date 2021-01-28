@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import Modal from '@material-ui/core/Modal';
 
-import Modal from '../../components/UI/Modal/Modal';
-import Aux from '../Aux';
+import MessageBox from '../../components/UI/MessageBox/MessageBox';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     //anonymous class
@@ -38,15 +38,18 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
         render() {
             return (
-                <Aux>
-                    <Modal 
-                        show={this.state.error}
-                        modalClosed={this.clearErrorHandler}
-                    >
-                        {this.state.error?this.state.error.message: null}
-                    </Modal>
+                <React.Fragment>
+                    <MessageBox
+                        title="Error"
+                        message={this.state.error
+                            ?this.state.error.message
+                            : 'Unexpected error'}
+                        actionType="OK"
+                        open={this.state.error}
+                        onClose={this.clearErrorHandler}
+                    />
                     <WrappedComponent {...this.props} />
-                </Aux>
+                </React.Fragment>
                 
             );
         }

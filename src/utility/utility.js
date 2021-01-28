@@ -5,6 +5,12 @@ export const updateObject = (oldObject, newObject) => {
     }
 }
 
+export const updateArray = (oldArray, newObject, index) => {
+    const newArray = [...oldArray];
+    newArray[index] = newObject;
+    return newArray;
+}
+
 export const checkFormFieldValid = (value, rules) => {
     let isValid = true;
     if (!rules) {
