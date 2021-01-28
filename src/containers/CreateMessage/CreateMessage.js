@@ -9,6 +9,8 @@ import axios from '../../network/axios';
 import withErrorHandler from '../../hoc/ErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import ImageInput from '../../components/UI/Image/ImageInput';
+import ImageCard from '../../components/UI/Image/ImageCard';
 
 const styles = theme => ({
     root: {
@@ -53,7 +55,8 @@ class CreateMessage extends Component {
                 modified: false
             }
         ],
-        isFormValid: false
+        isFormValid: false,
+        imageFile: null
     }
 
     checkFormValid(form) {
@@ -106,6 +109,10 @@ class CreateMessage extends Component {
         });
     }
 
+    imageChosenHandler = (event) => {
+        this.setState({imageFile: event.target.files[0]});
+    }
+
     render() {
         const additionalConfig = {fullWidth: true};
         const buttonConfig = {};
@@ -113,8 +120,16 @@ class CreateMessage extends Component {
         if(!this.state.isFormValid){
             buttonConfig['disabled'] = true;
         }
-        let form = null;
+        
 
+        let imageCard = null;
+        if(this.state.imageFile){
+            imageCard = <ImageCard 
+                imageURL={URL.createObjectURL(this.state.imageFile)}
+            />
+        }
+
+        let form = null;
         if(this.props.loading){
             form = <Spinner/>;
         }else{
@@ -136,6 +151,8 @@ class CreateMessage extends Component {
                         )
                     }
                     )}
+                    <ImageInput onChange={(e) => this.imageChosenHandler(e)} />
+                    {imageCard}
                     <Button {...buttonConfig} onClick={this.submitHandler}>Submit</Button>
                 </form>
             );

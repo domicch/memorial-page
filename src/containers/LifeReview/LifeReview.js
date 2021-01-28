@@ -13,10 +13,10 @@ class LifeReview extends Component {
             //     </Grid>
             // </Grid>
 
-            <Grid container justify="center">
-                <Grid item xs={12}>
+            <Grid container justify="center" spacing={2}>
+                {/* <Grid item xs={12} justify="center"> */}
                     <ArticleItems />
-                </Grid>
+                {/* </Grid> */}
             </Grid>
 
             // <div style={{

@@ -17,3 +17,9 @@ npm install --save @material-ui/core
 
 # for rendering markdown text format
 npm install --save markdown-to-jsx
+
+# firebase
+npm install --save firebase
+
+# for resize image before upload
+npm install --save react-image-file-resizer

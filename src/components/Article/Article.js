@@ -3,6 +3,7 @@ import Title from '../ArticleItem/Title';
 import { Typography } from '@material-ui/core';
 
 const Article = (props) => {
+
     let title = null;
 
     if (props.title) {
