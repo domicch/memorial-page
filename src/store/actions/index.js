@@ -9,3 +9,10 @@ export {
 export {
     createMessage
 } from './createMessage';
+
+export {
+    googleLogin,
+    refreshLoginState,
+    initAuth,
+    logout
+} from './auth';

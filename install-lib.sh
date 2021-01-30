@@ -23,3 +23,7 @@ npm install --save firebase
 
 # for resize image before upload
 npm install --save react-image-file-resizer
+
+# install typescript as some plugins reports missing peer dependency
+# npm WARN tsutils@3.20.0 requires a peer of typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta but none is installed. You must install peer dependencies yourself.
+npm install --save typescript

@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../network/axios';
+import { app } from "../../base";
 
 export const getMessagesSuccess = (messages) => {
     return {
@@ -25,25 +26,47 @@ export const getMessages = () => {
     return dispatch => {
         dispatch(getMessagesStart());
 
-        axios.get('/messages.json')
-        .then(res => {
-            const messages = [];
+        // axios.get('/messages.json')
+        // .then(res => {
+        //     const messages = [];
 
-            for(const id in res.data){
-                messages.push({ 
-                    ...res.data[id],
-                    id: id
+        //     for(const id in res.data){
+        //         messages.push({ 
+        //             ...res.data[id],
+        //             id: id
+        //         });
+        //     }
+
+        //     messages.sort((a,b) => {
+        //         return a.order - b.order;
+        //     });
+
+        //     dispatch(getMessagesSuccess(messages));
+        // })
+        // .catch(err => {
+        //     dispatch(getMessagesFailed());
+        // });
+
+        app.firestore().collection("messages").get()
+            .then(snapshot => {
+                const messages = [];
+
+                snapshot.forEach(message => {
+                    
+                    messages.push({
+                        ...message.data(),
+                        id: message.id
+                    });
                 });
-            }
 
-            messages.sort((a,b) => {
-                return a.order - b.order;
+                // messages.sort((a, b) => {
+                //     return a.order - b.order;
+                // });
+
+                dispatch(getMessagesSuccess(messages));
+            })
+            .catch(err => {
+                dispatch(getMessagesFailed());
             });
-
-            dispatch(getMessagesSuccess(messages));
-        })
-        .catch(err => {
-            dispatch(getMessagesFailed());
-        });
     }
 }

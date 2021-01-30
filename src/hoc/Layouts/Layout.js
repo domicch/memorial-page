@@ -1,9 +1,10 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {Container, AppBar, Box} from '@material-ui/core';
+import { Container, AppBar, Box, Button, Toolbar } from '@material-ui/core';
 
-import Header from '../../components/UI/Header/Header';
-import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
+// import Header from '../../components/UI/Header/Header';
+import Header from '../../components/Navigation/Header';
+import {Toolbar as MyToolbar} from '../../components/Navigation/Toolbar/Toolbar';
 
 
 const MuiLayout = (props) => {
@@ -29,15 +30,17 @@ const MuiLayout = (props) => {
         <React.Fragment>
             {/* to ensure similar look and feel across different browsers */}
             <CssBaseline />
-            
-            <AppBar position="fixed" color="inherit">
-            {/* <Box style={styles}> */}
+
+            {/* <AppBar position="fixed" color="inherit">
                 <Header title="M H Chan" />
-                <Toolbar />
-                {/* </Box> */}
-                </AppBar>
-                <Container maxWidth="lg" style={containerStyle}>
-                
+                <Button variant="outlined" size="small">Sign in</Button>
+                <MyToolbar />
+            </AppBar> */}
+
+            <Header />
+
+            <Container maxWidth="lg" style={containerStyle}>
+
                 <main>
                     {props.children}
                 </main>

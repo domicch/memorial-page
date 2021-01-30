@@ -34,7 +34,7 @@ class ArticleItems extends Component {
                 <Grid item key="skdjfhsdkjf" xs={12} sm={10} md={8}>
                     <ImageCard 
                     imageURL="https://firebasestorage.googleapis.com/v0/b/dad-page.appspot.com/o/25.jpg?alt=media"
-                    title="Test Image" />
+                    caption="犯人其在名字旁" />
                 </Grid>
             ));
         }

@@ -7,10 +7,13 @@ import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
+import firebase from 'firebase';
 
 import lifeReviewReducer from './store/reducers/lifeReview';
 import messagesReducer from './store/reducers/messages';
 import createMessageReducer from './store/reducers/createMessage';
+import authReducer from './store/reducers/auth';
+import {app} from './base';
 
 // for redux dev-tools Chrome extension. Please remove in PROD env
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -18,13 +21,25 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   lifeReview: lifeReviewReducer,
   messages: messagesReducer,
-  createMessage: createMessageReducer
+  createMessage: createMessageReducer,
+  auth: authReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(
   applyMiddleware(
     thunk
   )));
+
+  // // set firebase user token persistent to local storage
+  // app.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  // .then(() => {
+  //   console.log('set firebase persistence success');
+  // })
+  // .catch((error) => {
+  //   console.log('set firebase persistence failed', error);
+  // });
+
+  
 
 ReactDOM.render(
   <React.StrictMode>

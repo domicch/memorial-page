@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {Tab, Tabs} from '@material-ui/core';
+import {Toolbar as MUIToolbar} from '@material-ui/core';
 import { Link} from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   //   },
 }));
 
-export default function Toolbar() {
+export function Toolbar() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -55,13 +56,19 @@ export default function Toolbar() {
   };
 
   return (
-    <div className={classes.demo2}>
-      <StyledTabs value={value} onChange={handleChange}>
-        <StyledTab label="Life" component={Link} to="/"/>
-        <StyledTab label="Messages" component={Link} to="/messages"/>
-        <StyledTab label="New Message" component={Link} to="/newmessage"/>
-      </StyledTabs>
-      <Typography className={classes.padding} />
-    </div>
+    // <div className={classes.demo2}>
+    //   <StyledTabs value={value} onChange={handleChange}>
+    //     <StyledTab label="Life" component={Link} to="/"/>
+    //     <StyledTab label="Messages" component={Link} to="/messages"/>
+    //     <StyledTab label="New Message" component={Link} to="/newmessage"/>
+    //   </StyledTabs>
+    //   <Typography className={classes.padding} />
+    // </div>
+
+    <MUIToolbar component="nav" variant="dense">
+      <Link to="/">Life</Link>
+      <Link to="/messages">Messages</Link>
+      <Link to="/newmessage">New Message</Link>
+    </MUIToolbar>
   );
 }

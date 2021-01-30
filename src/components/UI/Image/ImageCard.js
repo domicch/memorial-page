@@ -38,21 +38,37 @@ const ImageCard = (props) => {
 
     const classes = useStyles();
 
+    const style = {
+      height: 'auto',
+      width: '100%',
+      objectFit: 'contain'
+    }
+
+    let caption = null;
+
+    if(props.caption){
+      caption = <Typography variant="body1">{props.caption}</Typography>
+    }
+
     return (
-            <Card 
-            // className={classes.card}
-            >
-            {/* <img 
-                src="https://firebasestorage.googleapis.com/v0/b/dad-page.appspot.com/o/25.jpg?alt=media"
+            // <Card 
+            // // className={classes.card}
+            // >
+            //     <CardMedia
+            //         className={classes.cardMedia}
+            //         image={props.imageURL}
+            //         title={props.title}
+            //     />
+            // </Card>
+
+             <div>
+             <img 
+                style={style}
+                src={props.imageURL}
                 alt='image'
-            /> */}
-                <CardMedia
-                    className={classes.cardMedia}
-                    image={props.imageURL}
-                    title={props.title}
-                />
-                {/* <CardContent className={classes.cardContent}>Test</CardContent> */}
-            </Card>
+            />
+            {caption}
+            </div>
     );
 }
 
