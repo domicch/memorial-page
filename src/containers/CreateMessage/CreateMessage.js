@@ -95,8 +95,8 @@ class CreateMessage extends Component {
 
             this.props.onCreateMessage(
                 this.props.userId,
-                message, 
-                this.state.imageFile, 
+                message,
+                this.state.imageFile,
                 this.state.resizedImageBase64);
         }
     }
@@ -123,12 +123,12 @@ class CreateMessage extends Component {
         console.log(imageFile);
 
         let contentType = null;
-        
-        if(imageFile.type === 'image/jpeg'){
+
+        if (imageFile.type === 'image/jpeg') {
             contentType = 'JPEG';
-        }else if(imageFile.type === 'image/x-png'){
+        } else if (imageFile.type === 'image/x-png') {
             contentType = 'PNG';
-        }else{
+        } else {
             alert('Invalid content type');
             this.setState({
                 imageFile: null,
@@ -154,10 +154,10 @@ class CreateMessage extends Component {
         let originalFileURL = null;
         let resizedFileURL = null;
 
-        
 
-        if(resizedFile){
-            resizedFile = resizedFile.substring(resizedFile.indexOf(',')+1);
+
+        if (resizedFile) {
+            resizedFile = resizedFile.substring(resizedFile.indexOf(',') + 1);
         }
         console.log(resizedFile);
 
@@ -171,13 +171,13 @@ class CreateMessage extends Component {
                             originalFileURL = url;
                             if (resizedFile) {
                                 fileRef = storageRef.child('resized/' + fileNamePrefix + file.name);
-                                fileRef.putString(resizedFile, 'base64', {contentType:'image/jpg'})
+                                fileRef.putString(resizedFile, 'base64', { contentType: 'image/jpg' })
                                     .then(snapshot2 => {
                                         snapshot2.ref.getDownloadURL()
                                             .then(url2 => {
                                                 resizedFileURL = url2;
-                                                console.log('url1: '+originalFileURL);
-                                                console.log('url2: '+resizedFileURL);
+                                                console.log('url1: ' + originalFileURL);
+                                                console.log('url2: ' + resizedFileURL);
                                             })
                                             .catch(error => console.log(error));
                                     })
@@ -212,28 +212,39 @@ class CreateMessage extends Component {
                 buttonConfig['disabled'] = true;
             }
 
-            let imageCard = null;
-            if (this.state.imageFile) {
+            let imageFilePath = null;
+            if(this.state.resizedImageBase64){
+                imageFilePath = this.state.resizedImageBase64;
+            }else if(this.state.imageFile){
+                imageFilePath = URL.createObjectURL(this.state.imageFile);
+            }
+
+            let imageCard = null;            
+            if (imageFilePath) {
                 imageCard = (
                     <React.Fragment>
-                        <Button onClick={this.testImageUploadHandler}>Test Upload</Button>
-                        <ImageCard
-                            imageURL={URL.createObjectURL(this.state.imageFile)}
-                        />
-                    </React.Fragment>
+                        {/* <Button onClick={this.testImageUploadHandler}>Test Upload</Button> */}
+                        <Grid container justify="center" style={{margin: '20px 0px'}}>
+                            <Grid item xs={12} sm={10} md={8}>
+                                <ImageCard
+                                    imageURL={imageFilePath}
+                                />
+                            </Grid>
+                        </Grid>
+                    </React.Fragment >
                 );
             }
 
-            let resizedImageCard = null;
-            if (this.state.resizedImageBase64) {
-                resizedImageCard = (
-                    <React.Fragment>
-                        <ImageCard
-                            imageURL={this.state.resizedImageBase64}
-                        />
-                    </React.Fragment>
-                );
-            }
+            // let resizedImageCard = null;
+            // if (this.state.resizedImageBase64) {
+            //     resizedImageCard = (
+            //         <React.Fragment>
+            //             <ImageCard
+            //                 imageURL={this.state.resizedImageBase64}
+            //             />
+            //         </React.Fragment>
+            //     );
+            // }
 
             if (this.props.loading) {
                 form = <Spinner />;
@@ -258,10 +269,11 @@ class CreateMessage extends Component {
                                 )
                             }
                             )}
-                            <ImageInput onChange={(e) => this.imageChosenHandler(e)} />
-                            {imageCard}
-                            {resizedImageCard}
+                            
+                            {/* {resizedImageCard} */}
                         </form>
+                        <ImageInput onChange={(e) => this.imageChosenHandler(e)} />
+                            {imageCard}
                         <Button {...buttonConfig} onClick={this.submitHandler}>Submit</Button>
                     </React.Fragment>
                 );

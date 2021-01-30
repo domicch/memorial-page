@@ -40,7 +40,7 @@ const uploadImage = async (filename, file, contentType, isBase64) => {
 }
 
 export const createMessage = (userId, message, originalImage, resizedImageBase64) => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(createMessageStart());
 
         let fileNamePrefix = userId + '-' + new Date().getTime();
@@ -49,8 +49,8 @@ export const createMessage = (userId, message, originalImage, resizedImageBase64
             let originalImageURL = null;
             
             try{
-                originalImageURL = uploadImage(
-                    fileNamePrefix+'-1',
+                originalImageURL = await uploadImage(
+                    'messages/original/'+fileNamePrefix+'-1',
                     originalImage,
                     originalImage.type,
                     false);
@@ -64,10 +64,11 @@ export const createMessage = (userId, message, originalImage, resizedImageBase64
 
             if(resizedImageBase64){
                 let resizedImageURL = null;
+                resizedImageBase64 = resizedImageBase64.substring(resizedImageBase64.indexOf(',')+1);
                 
                 try{
-                    uploadImage(
-                        fileNamePrefix+'-2',
+                    resizedImageURL = await uploadImage(
+                        'messages/reiszed/'+fileNamePrefix+'-2',
                         resizedImageBase64,
                         originalImage.type,
                         true);
@@ -85,7 +86,7 @@ export const createMessage = (userId, message, originalImage, resizedImageBase64
         // add order and timestamp as server timestamp
         message['timestamp'] = firebase.firestore.FieldValue.serverTimestamp();
         message['order'] = firebase.firestore.FieldValue.serverTimestamp();
-
+        message['userId'] = userId;
 
         app.firestore().collection("messages").add(message)
             .then(response => {

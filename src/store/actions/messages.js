@@ -47,7 +47,7 @@ export const getMessages = () => {
         //     dispatch(getMessagesFailed());
         // });
 
-        app.firestore().collection("messages").get()
+        app.firestore().collection("messages").orderBy("order").get()
             .then(snapshot => {
                 const messages = [];
 
