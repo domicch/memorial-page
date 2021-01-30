@@ -1,9 +1,17 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2021, 2, 27);
+    // match /{document=**} {
+    //   allow read, write: if
+    //       request.time < timestamp.date(2021, 2, 27);
+    // }
+
+    // allow only authenticated user to have write access
+    match /messages/{documents=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.resource.data.timestamp == request.time
+        && request.resource.data.order == request.time;
     }
   }
 }
