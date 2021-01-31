@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Grid } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import {orange} from '@material-ui/core/colors';
 
 import Message from '../../components/Message/Message';
 import axios from '../../network/axios';
 import withErrorHandler from '../../hoc/ErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import ContentContainer from '../../components/UI/ContentContainer/ContentContainer';
+
+const styles = theme => ({
+    root: {
+        paddingTop: 30
+    }
+});
 
 class Messages extends Component {
     
@@ -23,7 +32,10 @@ class Messages extends Component {
         else if (this.props.messages) {
             messages = this.props.messages.map(
                 message => (
-                    <Grid item key={message.id} xs={12} sm={10} md={8}>
+                    <Grid item key={message.id} 
+                        xs={10} 
+                        // sm={10} md={8}
+                    >
                         <Message {...message} />
                     </Grid>
                 )
@@ -31,11 +43,13 @@ class Messages extends Component {
         }
 
         return(
-            <Grid container justify="center">
-                {/* <Grid item xs={12}> */}
-                {messages}
-                {/* </Grid> */}
-            </Grid>
+            <ContentContainer>
+                <Grid container justify="center" className={this.props.classes.root}>
+                    {/* <Grid item xs={12}> */}
+                    {messages}
+                    {/* </Grid> */}
+                </Grid>
+            </ContentContainer>
 
             // <div style={{display: 'flex', justifyContent: 'center'}}>
             //     {messages}
@@ -58,4 +72,6 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Messages, axios));
+export default connect(mapStateToProps, mapDispatchToProps)
+    (withErrorHandler(
+        withStyles(styles)(Messages), axios));

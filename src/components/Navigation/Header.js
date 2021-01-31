@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         left: 0,
         width: '100%',
         height: 50,
-        backgroundColor: 'white'
+        backgroundColor: '#D3E2E6'
     },
     toolbarTitle: {
         flex: 1,
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         left: 0,
         width: '100%',
         height: 50,
-        backgroundColor: 'white'
+        backgroundColor: '#D4B58A'
     },
     toolbarLink: {
         padding: theme.spacing(1),
@@ -49,7 +49,7 @@ const Header = (props) => {
     if (props.authenticated) {
         logoutButton = (<Button 
             onClick={props.onLogout}
-            variant="outlined" 
+            // variant="outlined" 
             size="small"
         >
             Logout
@@ -71,7 +71,9 @@ const Header = (props) => {
         </Typography>
                 {logoutButton}
             </Toolbar>
-            <Toolbar variant="dense" className={classes.toolbarSecondary}>
+            <Toolbar variant="dense" 
+                className={classes.toolbarSecondary}
+            >
                 {/* <Link to="/">Life</Link>
         <Link to="/messages">Messages</Link>
         <Link to="/newmessage">New Message</Link> */}

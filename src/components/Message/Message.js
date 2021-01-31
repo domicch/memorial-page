@@ -1,14 +1,16 @@
 import React from 'react';
 import Title from '../ArticleItem/Title';
-import { Typography, Card, CardContent, Grid } from '@material-ui/core';
+import { Typography, Card, CardContent, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import {blue} from '@material-ui/core/colors';
 
 import ImageCard from '../UI/Image/ImageCard';
 
 const useStyles = makeStyles({
     root: {
         marginBottom: '50px',
-        width: '100%'
+        width: '100%',
+        background: '#F5E9D4'
     },
     content: {
         margin: '12px'
@@ -39,7 +41,7 @@ const Message = (props) => {
     }
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} variant="outlined">
             <CardContent>
                 <Typography className={classes.content} variant="body1" style={{ whiteSpace: 'pre-line' }}
                     gutterBottom paragraph>

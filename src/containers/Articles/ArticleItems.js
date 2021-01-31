@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 
 import Article from '../../components/Article/Article';
@@ -18,25 +18,31 @@ class ArticleItems extends Component {
     render() {
         let articleItems = null;
 
-        if(this.props.loading){
-            articleItems = <Grid item><Spinner/> </Grid>
+        if (this.props.loading) {
+            articleItems = <Grid item><Spinner /> </Grid>
         }
         else if (this.props.articleItems) {
             articleItems = this.props.articleItems.map(
                 article => (
-                    <Grid item key={article.id} xs={12} sm={10} md={8}>
+                    <Grid item key={article.id}
+                        xs={12}
+                    // sm={10} md={8}
+                    >
                         <Article  {...article} />
                     </Grid>
                 )
             );
 
-            articleItems.push((
-                <Grid item key="skdjfhsdkjf" xs={12} sm={10} md={8}>
-                    <ImageCard 
-                    imageURL="https://firebasestorage.googleapis.com/v0/b/dad-page.appspot.com/o/25.jpg?alt=media"
-                    caption="犯人其在名字旁" />
-                </Grid>
-            ));
+            // articleItems.push((
+            //     <Grid item key="skdjfhsdkjf"
+            //         xs={12}
+            //     // sm={10} md={8}
+            //     >
+            //         <ImageCard
+            //             imageURL="https://firebasestorage.googleapis.com/v0/b/dad-page.appspot.com/o/25.jpg?alt=media"
+            //             caption="犯人其在名字旁" />
+            //     </Grid>
+            // ));
         }
 
         return (
@@ -58,4 +64,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (withErrorHandler(ArticleItems, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ArticleItems, axios));

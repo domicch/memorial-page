@@ -13,6 +13,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import ImageInput from '../../components/UI/Image/ImageInput';
 import ImageCard from '../../components/UI/Image/ImageCard';
 import { resizeImage } from '../../utility/Image/ImageResizer';
+import ContentContainer from '../../components/UI/ContentContainer/ContentContainer';
 
 const styles = theme => ({
     root: {
@@ -120,27 +121,34 @@ class CreateMessage extends Component {
 
     imageChosenHandler = (event) => {
         const imageFile = event.target.files[0];
-        console.log(imageFile);
 
-        let contentType = null;
+        if (imageFile) {
 
-        if (imageFile.type === 'image/jpeg') {
-            contentType = 'JPEG';
-        } else if (imageFile.type === 'image/x-png') {
-            contentType = 'PNG';
+            let contentType = null;
+
+            if (imageFile.type === 'image/jpeg') {
+                contentType = 'JPEG';
+            } else if (imageFile.type === 'image/x-png') {
+                contentType = 'PNG';
+            } else {
+                alert('Invalid content type');
+                this.setState({
+                    imageFile: null,
+                    resizedImageBase64: null
+                });
+                return;
+            }
+
+            this.setState({ imageFile: imageFile });
+            resizeImage(imageFile, contentType, (file) => {
+                this.setState({ resizedImageBase64: file })
+            });
         } else {
-            alert('Invalid content type');
             this.setState({
                 imageFile: null,
                 resizedImageBase64: null
             });
-            return;
         }
-
-        this.setState({ imageFile: imageFile });
-        resizeImage(imageFile, contentType, (file) => {
-            this.setState({ resizedImageBase64: file })
-        });
     }
 
     testImageUploadHandler = () => {
@@ -213,18 +221,18 @@ class CreateMessage extends Component {
             }
 
             let imageFilePath = null;
-            if(this.state.resizedImageBase64){
+            if (this.state.resizedImageBase64) {
                 imageFilePath = this.state.resizedImageBase64;
-            }else if(this.state.imageFile){
+            } else if (this.state.imageFile) {
                 imageFilePath = URL.createObjectURL(this.state.imageFile);
             }
 
-            let imageCard = null;            
+            let imageCard = null;
             if (imageFilePath) {
                 imageCard = (
                     <React.Fragment>
                         {/* <Button onClick={this.testImageUploadHandler}>Test Upload</Button> */}
-                        <Grid container justify="center" style={{margin: '20px 0px'}}>
+                        <Grid container justify="center" style={{ margin: '20px 0px' }}>
                             <Grid item xs={12} sm={10} md={8}>
                                 <ImageCard
                                     imageURL={imageFilePath}
@@ -269,11 +277,11 @@ class CreateMessage extends Component {
                                 )
                             }
                             )}
-                            
+
                             {/* {resizedImageCard} */}
                         </form>
                         <ImageInput onChange={(e) => this.imageChosenHandler(e)} />
-                            {imageCard}
+                        {imageCard}
                         <Button {...buttonConfig} onClick={this.submitHandler}>Submit</Button>
                     </React.Fragment>
                 );
@@ -291,11 +299,13 @@ class CreateMessage extends Component {
         }
 
         return (
-            <Grid container justify="center">
-                <Grid item xs={12}>
-                    {form}
+            <ContentContainer>
+                <Grid container justify="center">
+                    <Grid item xs={12}>
+                        {form}
+                    </Grid>
                 </Grid>
-            </Grid>
+            </ContentContainer>
 
             // <div style={{display: 'flex', justifyContent: 'center'}}>
             //     {form}

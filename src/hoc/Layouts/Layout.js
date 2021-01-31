@@ -1,51 +1,46 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Container, AppBar, Box, Button, Toolbar } from '@material-ui/core';
+import { Container, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import {orange} from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
 
-// import Header from '../../components/UI/Header/Header';
 import Header from '../../components/Navigation/Header';
-import {Toolbar as MyToolbar} from '../../components/Navigation/Toolbar/Toolbar';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: orange,
+        // secondary: amber,
+    },
+    
+});
+
+const useStyles = makeStyles(theme => {
+    console.log(theme);
+    return ({
+    root: {
+        marginTop: 100,
+        minHeight: 'calc(100vh - 100px)',
+        width: '80%',        
+        [theme.breakpoints.down('sm')]:{
+            width: '100%'
+        },
+        background: '#F5F3EE'
+    }
+})});
 
 
 const MuiLayout = (props) => {
-    const styles = {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: 100,
-        backgroundColor: 'white'
-    };
-
-    const containerStyle = {
-        marginTop: 120
-    };
-
-    const appBarStyle = {
-        backgroundColor: 'white',
-        color: 'black'
-    }
+    const classes = useStyles();
 
     return (
         <React.Fragment>
             {/* to ensure similar look and feel across different browsers */}
             <CssBaseline />
 
-            {/* <AppBar position="fixed" color="inherit">
-                <Header title="M H Chan" />
-                <Button variant="outlined" size="small">Sign in</Button>
-                <MyToolbar />
-            </AppBar> */}
-
-            <Header />
-
-            <Container maxWidth="lg" style={containerStyle}>
-
-                <main>
-                    {props.children}
-                </main>
-            </Container>
-            {/* <Footer title="Footer" description="Something here to give the footer a purpose!" /> */}
+            <MuiThemeProvider theme={theme}>
+                <Header />
+                {props.children}
+            </MuiThemeProvider>
         </React.Fragment>
     );
 }

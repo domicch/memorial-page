@@ -27,14 +27,9 @@ class App extends Component {
     );
 
     return (
-      <div>
-        {/* <Layout>
-          {routes}
-        </Layout> */}
         <MUILayout>
           {routes}
         </MUILayout>
-      </div>
     );
   }
 }
