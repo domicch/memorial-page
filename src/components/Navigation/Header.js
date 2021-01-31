@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Toolbar, Button, Typography, Tabs, Tab } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import zIndex from '@material-ui/core/styles/zIndex';
+
 import * as actions from '../../store/actions/index';
 
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -15,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
         left: 0,
         width: '100%',
         height: 50,
-        backgroundColor: '#D3E2E6'
+        backgroundColor: '#D3E2E6',
+        zIndex: zIndex.appBar
     },
     toolbarTitle: {
         flex: 1,
@@ -28,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
         left: 0,
         width: '100%',
         height: 50,
-        backgroundColor: '#D4B58A'
+        backgroundColor: '#D4B58A',
+        zIndex: zIndex.appBar
     },
     toolbarLink: {
         padding: theme.spacing(1),

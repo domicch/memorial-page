@@ -33,8 +33,7 @@ class Messages extends Component {
             messages = this.props.messages.map(
                 message => (
                     <Grid item key={message.id} 
-                        xs={10} 
-                        // sm={10} md={8}
+                        xs={12} sm={10}
                     >
                         <Message {...message} />
                     </Grid>

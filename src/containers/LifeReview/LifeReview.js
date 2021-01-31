@@ -8,6 +8,9 @@ import ArticleItems from '../Articles/ArticleItems';
 import ContentContainer from '../../components/UI/ContentContainer/ContentContainer';
 
 const styles = theme => ({
+    titleImageDiv: {
+        overflow: 'hidden'
+    },
     titleImage: {
         // objectFit: 'contain',
         // height: 'auto',
@@ -31,11 +34,11 @@ const styles = theme => ({
         top: '30px',
         marginTop: '100px',
         position: 'absolute',
-        
+
         height: '300px',
         marginLeft: '80%',
         transform: 'translateX(-80%)',
-        
+
 
         [theme.breakpoints.down('sm')]: {
             height: '250px',
@@ -67,11 +70,13 @@ class LifeReview extends Component {
     render() {
         return (
             <React.Fragment>
-                <img
-                    className={this.props.classes.titleImage}
-                    src={titleImage}
-                    alt='image'
-                />
+                <div className={this.props.classes.titleImageDiv}>
+                    <img
+                        className={this.props.classes.titleImage}
+                        src={titleImage}
+                        alt='image'
+                    />
+                </div>
                 <img
                     className={this.props.classes.profileImage}
                     src={profileImage}
@@ -80,7 +85,7 @@ class LifeReview extends Component {
                 <Typography variant="h2" align="center"
                     className={this.props.classes.title}
                 >
-                    Dr. M H Chan <br/> 1956 - 2020
+                    Dr. M H Chan <br /> 1956 - 2020
                 </Typography>
 
                 <ContentContainer>
