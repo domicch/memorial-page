@@ -27,6 +27,7 @@ const input = (props) => {
             inputElement = <TextField 
                 {...props.elementConfig}
                 {...config}
+                value={props.value}
                 onChange={props.onChange}
             />
             break;
@@ -36,6 +37,7 @@ const input = (props) => {
                 {...config}
                 variant="outlined"
                 multiline
+                value={props.value}
                 onChange={props.onChange}
             />
             break;

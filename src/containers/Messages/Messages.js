@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import {orange} from '@material-ui/core/colors';
 
 import Message from '../../components/Message/Message';
-import axios from '../../network/axios';
-import withErrorHandler from '../../hoc/ErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import ContentContainer from '../../components/UI/ContentContainer/ContentContainer';
-import ErrorCard from '../../components/UI/Error/ErrorCard';
+import ErrorCard from '../../components/UI/Cards/ErrorCard';
 
 const styles = theme => ({
     root: {
@@ -34,7 +31,7 @@ class Messages extends Component {
         let messages = null;
 
         if(this.props.loading){
-            messages = <Spinner/>;
+            messages = <Grid item><Spinner/></Grid>;
         } else if (this.props.error) {
             messages = (
                 <Grid item>
@@ -86,5 +83,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
-    (withErrorHandler(
-        withStyles(styles)(Messages), axios));
+    (withStyles(styles)(Messages));

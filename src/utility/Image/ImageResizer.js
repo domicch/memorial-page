@@ -13,19 +13,34 @@ import Resizer from 'react-image-file-resizer';
     minWidth, // Is the minWidth of the resized new image.
     minHeight, // Is the minHeight of the resized new image.
  */
-export const resizeImage = (imageFile, imageFormat, callback) => {
-    try {
-        Resizer.imageFileResizer(
-            imageFile,
-            1280,
-            1280,
-            imageFormat,
-            90,
-            0,
-            callback,
-            'base64'
-        );
-    } catch(err) {
-        console.log(err)
-    }
-}
+// export const resizeImage = (imageFile, imageFormat, callback) => {
+//     try {
+//         Resizer.imageFileResizer(
+//             imageFile,
+//             1280,
+//             1280,
+//             imageFormat,
+//             90,
+//             0,
+//             callback,
+//             'base64'
+//         );
+//     } catch(err) {
+//         console.log(err)
+//     }
+// }
+
+export const resizeImage = (imageFile, imageFormat) => new Promise(resolve => {
+    Resizer.imageFileResizer(
+        imageFile,
+        1280,
+        1280,
+        imageFormat,
+        90,
+        0,
+        uri => {
+            resolve(uri);
+        },
+        'base64'
+    );
+});

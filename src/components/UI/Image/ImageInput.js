@@ -3,7 +3,8 @@ import {Input} from '@material-ui/core';
 
 const ImageInput = (props) => {
     const inputProps = {
-        accept: "image/x-png,image/jpeg"
+        accept: "image/x-png,image/jpeg",
+        multiple: true
     }
 
     return (

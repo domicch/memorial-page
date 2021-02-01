@@ -1,11 +1,18 @@
 import React from 'react';
 import { Typography, Card, CardActions, CardContent, Button} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        margin: 20
+    }
+}));
 
 const ErrorCard = (props) => {
 
-
+    const classes = useStyles();
     return (
-        <Card>
+        <Card className={classes.root}>
             <CardContent>
                 <Typography
                     variant="body1"

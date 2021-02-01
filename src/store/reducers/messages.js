@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_MESSAGES_FAILED:
             return getMessagesFailed(state, action);
         case actionTypes.GET_MESSAGES_START:
-            return getMessagesStart(state);
+            return getMessagesStart(state, action);
         default:
             return state;
     }

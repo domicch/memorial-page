@@ -1,14 +1,14 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Container, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
-import {orange} from '@material-ui/core/colors';
+import {indigo} from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Header from '../../components/Navigation/Header';
 
 const theme = createMuiTheme({
     palette: {
-        primary: orange,
+        primary: indigo,
         // secondary: amber,
     },
     

@@ -1,8 +1,8 @@
 import React from 'react';
 import Title from '../ArticleItem/Title';
-import { Typography, Card, CardContent, Grid, Paper } from '@material-ui/core';
+import { Typography, Card, CardContent, Grid, Paper, GridList, GridListTile } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {blue} from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors';
 
 import ImageCard from '../UI/Image/ImageCard';
 
@@ -14,7 +14,18 @@ const useStyles = makeStyles({
     },
     content: {
         margin: '12px'
-    }
+    },
+    gridListRoot: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        // backgroundColor: theme.palette.background.paper,
+      },
+    // gridList: {
+    //     width: 500,
+    //     height: 450,
+    //   },
 });
 
 const Message = (props) => {
@@ -27,16 +38,28 @@ const Message = (props) => {
         );
     }
 
-    let imageCard = null;
-    if (props.originalImageURL) {
-        imageCard = (
+    let imageCards = [];
+    if (props.imageFiles) {
+        imageCards = (
             <Grid container justify="center">
-                <Grid item xs={12} sm={10} md={8}>
-                    <ImageCard
-                        imageURL={props.resizedImageURL}
-                    />
-                </Grid>
+                {props.imageFiles.map((files, index) => (
+                    <Grid item key={index} xs={12} sm={10} md={8}>
+                        <ImageCard
+                            imageURL={files.resizedImageURL}
+                        />
+                    </Grid>
+                ))}
             </Grid>
+
+            // <div className={classes.gridListRoot}>
+            //     <GridList className={classes.gridList} cols={2}>
+            //         {props.imageFiles.map((files, index) => (
+            //             <GridListTile key={index}>
+            //                 <img src={files.resizedImageURL} />
+            //             </GridListTile>
+            //         ))}
+            //     </GridList>
+            // </div>
         );
     }
 
@@ -58,7 +81,7 @@ const Message = (props) => {
                 >
                     {props.author}
                 </Typography>
-                {imageCard}
+                {imageCards}
             </CardContent>
         </Card>
     );

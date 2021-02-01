@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 import Article from '../../components/Article/Article';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import ErrorCard from '../../components/UI/Error/ErrorCard';
+import ErrorCard from '../../components/UI/Cards/ErrorCard';
 import ImageCard from '../../components/UI/Image/ImageCard';
 
 class ArticleItems extends Component {

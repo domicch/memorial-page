@@ -22,66 +22,81 @@ export const createMessageStart = () => {
     };
 }
 
+export const createMessageReset = () => {
+    return {
+        type: actionTypes.CREATE_MESSAGE_RESET
+    };
+}
+
 const uploadImage = async (filename, file, contentType, isBase64) => {
     const storageRef = app.storage().ref();
 
     let fileRef = storageRef.child(filename);
     let downloadURL = null;
 
-   
-    if(isBase64){
-        await fileRef.putString(file, 'base64', {contentType:contentType})
-    }else{
+
+    if (isBase64) {
+        await fileRef.putString(file, 'base64', { contentType: contentType })
+    } else {
         await fileRef.put(file);
     }
     downloadURL = await fileRef.getDownloadURL();
-    
+
     return downloadURL;
 }
 
-export const createMessage = (userId, message, originalImage, resizedImageBase64) => {
+export const createMessage = (userId, message, imageFiles) => {
     return async dispatch => {
         dispatch(createMessageStart());
 
-        let fileNamePrefix = userId + '-' + new Date().getTime();
+        const fileNamePrefix = userId + '-' + new Date().getTime();
+        const messageImages = [];
 
-        if(originalImage){
-            let originalImageURL = null;
-            
-            try{
-                originalImageURL = await uploadImage(
-                    'messages/original/'+fileNamePrefix+'-1',
-                    originalImage,
-                    originalImage.type,
-                    false);
-                
-                message['originalImageURL'] = originalImageURL;
-            }catch(error){
-                console.log("uploadImage original error", error);
-                dispatch(createMessageFailed(error));
-                return;
-            }
+        for (let i = 0; i < imageFiles.length; i++) {
+            let originalImage = imageFiles[i].original;
+            let resizedImageBase64 = imageFiles[i].resized;
 
-            if(resizedImageBase64){
-                let resizedImageURL = null;
-                resizedImageBase64 = resizedImageBase64.substring(resizedImageBase64.indexOf(',')+1);
-                
-                try{
-                    resizedImageURL = await uploadImage(
-                        'messages/reiszed/'+fileNamePrefix+'-2',
-                        resizedImageBase64,
+            if (originalImage) {
+                let originalImageURL = null;
+                let image = {};
+
+                try {
+                    originalImageURL = await uploadImage(
+                        'messages/original/' + fileNamePrefix + '-' + i + '-ori',
+                        originalImage,
                         originalImage.type,
-                        true);
-                    
-                    message['resizedImageURL'] = resizedImageURL;
-                }catch(error){
-                    console.log("uploadImage resized error", error);
-                    dispatch(createMessageFailed(error));
+                        false);
+
+                    image['originalImageURL'] = originalImageURL;
+                } catch (error) {
+                    console.log("createMessage: uploadImage original["+i+"] error ", error);
+                    dispatch(createMessageFailed(new Error('Upload original image '+i+' failed')));
                     return;
                 }
+
+                if (resizedImageBase64) {
+                    let resizedImageURL = null;
+                    resizedImageBase64 = resizedImageBase64.substring(resizedImageBase64.indexOf(',') + 1);
+
+                    try {
+                        resizedImageURL = await uploadImage(
+                            'messages/resized/' + fileNamePrefix + '-' + i + '-r1',
+                            resizedImageBase64,
+                            originalImage.type,
+                            true);
+
+                        image['resizedImageURL'] = resizedImageURL;
+                    } catch (error) {
+                        console.log("createMessage: uploadImage original["+i+"] error ", error);
+                        dispatch(createMessageFailed(new Error('Upload resized image '+i+' failed')));
+                        return;
+                    }
+                }
+                messageImages.push(image);
             }
-            
         }
+
+        message['imageFiles'] = messageImages;
 
         // add order and timestamp as server timestamp
         message['timestamp'] = firebase.firestore.FieldValue.serverTimestamp();
@@ -93,9 +108,9 @@ export const createMessage = (userId, message, originalImage, resizedImageBase64
                 console.log("createMessage: success", response);
                 dispatch(createMessageSuccess());
             })
-            .catch(function(error) {
-                console.log("createMessage: failed", error);
-                dispatch(createMessageFailed(error));
+            .catch(function (error) {
+                console.log("createMessage: upload firestore failed", error);
+                dispatch(createMessageFailed(new Error('Failed to create message')));
             });
     }
 }

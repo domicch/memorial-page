@@ -40,7 +40,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_LIFEREVIEW_FAILED:
             return getLifeReviewFailed(state, action);
         case actionTypes.GET_LIFEREVIEW_START:
-            return getLifeReviewStart(state);
+            return getLifeReviewStart(state, action);
         default:
             return state;
     }

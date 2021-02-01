@@ -7,7 +7,8 @@ export {
 } from './messages';
 
 export {
-    createMessage
+    createMessage,
+    createMessageReset
 } from './createMessage';
 
 export {
