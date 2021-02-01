@@ -3,15 +3,19 @@ import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 
 import Article from '../../components/Article/Article';
-import axios from '../../network/axios';
-import withErrorHandler from '../../hoc/ErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
-import ImageCard from '../../components/UI/Image/ImageCard';
-
 import Spinner from '../../components/UI/Spinner/Spinner';
+import ErrorCard from '../../components/UI/Error/ErrorCard';
+import ImageCard from '../../components/UI/Image/ImageCard';
 
 class ArticleItems extends Component {
     componentDidMount() {
+        if(!this.props.articleItems){
+            this.props.onGetLifeReview();
+        }
+    }
+
+    refreshPage = () => {
         this.props.onGetLifeReview();
     }
 
@@ -20,17 +24,33 @@ class ArticleItems extends Component {
 
         if (this.props.loading) {
             articleItems = <Grid item><Spinner /> </Grid>
-        }
-        else if (this.props.articleItems) {
+        } else if (this.props.error) {
+            articleItems = (
+                <Grid item>
+                    <ErrorCard onAction={this.refreshPage} actionText="Refresh Page" />
+                </Grid>
+            );
+        } else if (this.props.articleItems) {
             articleItems = this.props.articleItems.map(
-                article => (
-                    <Grid item key={article.id}
-                        xs={12}
-                    // sm={10} md={8}
-                    >
-                        <Article  {...article} />
-                    </Grid>
-                )
+                article => {
+                    if (article.type === 'article') {
+                        return (<Grid item key={article.id}
+                            xs={12} // sm={10} md={8}
+                        >
+                            <Article  {...article} />
+                        </Grid>
+                        );
+                    } else if (article.type === 'image') {
+                        return (
+                            <Grid item key={article.id} xs={12} sm={10} md={8}>
+                                <ImageCard
+                                    imageURL={article.imageURL}
+                                    caption={article.caption}
+                                />
+                            </Grid>
+                        );
+                    }
+                }
             );
 
             // articleItems.push((
@@ -54,7 +74,8 @@ class ArticleItems extends Component {
 const mapStateToProps = state => {
     return {
         articleItems: state.lifeReview.articleItems,
-        loading: state.lifeReview.loading
+        loading: state.lifeReview.loading,
+        error: state.lifeReview.error
     }
 }
 
@@ -64,4 +85,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ArticleItems, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleItems);

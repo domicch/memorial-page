@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes';
-import axios from '../../network/axios';
 import { app } from "../../base";
 
 export const getMessagesSuccess = (messages) => {
@@ -58,15 +57,11 @@ export const getMessages = () => {
                         id: message.id
                     });
                 });
-
-                // messages.sort((a, b) => {
-                //     return a.order - b.order;
-                // });
-
+                
                 dispatch(getMessagesSuccess(messages));
             })
             .catch(err => {
-                dispatch(getMessagesFailed());
+                dispatch(getMessagesFailed(err));
             });
     }
 }

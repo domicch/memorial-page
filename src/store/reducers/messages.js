@@ -2,8 +2,9 @@ import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../../utility/utility';
 
 const initialState = {
-    messages: [],
-    loading: false
+    messages: null,
+    loading: false,
+    error: null
 };
 
 const getMessagesSuccess = (state, action) => {
@@ -11,16 +12,23 @@ const getMessagesSuccess = (state, action) => {
     return updateObject(state, 
     {
         loading: false,
+        error: null,
         messages: action.messages
     });
 }
 
-const getMessagesFailed = (state) => {
-    return updateObject(state, {loading: false});
+const getMessagesFailed = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        error: action.error
+    });
 }
 
 const getMessagesStart = (state) => {
-    return updateObject(state, {loading: true});
+    return updateObject(state, {
+        loading: true,
+        error: null
+    });
 }
 
 
@@ -29,7 +37,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_MESSAGES_SUCCESS:
             return getMessagesSuccess(state, action);
         case actionTypes.GET_MESSAGES_FAILED:
-            return getMessagesFailed(state);
+            return getMessagesFailed(state, action);
         case actionTypes.GET_MESSAGES_START:
             return getMessagesStart(state);
         default:

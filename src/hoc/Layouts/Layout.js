@@ -15,7 +15,6 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles(theme => {
-    console.log(theme);
     return ({
     root: {
         marginTop: 100,

@@ -10,6 +10,7 @@ import withErrorHandler from '../../hoc/ErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import ContentContainer from '../../components/UI/ContentContainer/ContentContainer';
+import ErrorCard from '../../components/UI/Error/ErrorCard';
 
 const styles = theme => ({
     root: {
@@ -20,6 +21,12 @@ const styles = theme => ({
 class Messages extends Component {
     
     componentDidMount() {
+        if(!this.props.messages){
+            this.props.onGetMessages();
+        }
+    }
+
+    refreshPage = () => {
         this.props.onGetMessages();
     }
 
@@ -28,6 +35,12 @@ class Messages extends Component {
 
         if(this.props.loading){
             messages = <Spinner/>;
+        } else if (this.props.error) {
+            messages = (
+                <Grid item>
+                    <ErrorCard onAction={this.refreshPage} actionText="Refresh Page" />
+                </Grid>
+            );
         }
         else if (this.props.messages) {
             messages = this.props.messages.map(
@@ -61,7 +74,8 @@ class Messages extends Component {
 const mapStateToProps = state => {
     return {
         messages: state.messages.messages,
-        loading: state.messages.loading
+        loading: state.messages.loading,
+        error: state.messages.error
     }
 }
 

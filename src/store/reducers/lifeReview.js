@@ -2,8 +2,9 @@ import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../../utility/utility';
 
 const initialState = {
-    articleItems: [],
-    loading: false
+    articleItems: null,
+    loading: false,
+    error: null
 };
 
 const getLifeReviewSuccess = (state, action) => {
@@ -11,16 +12,24 @@ const getLifeReviewSuccess = (state, action) => {
     return updateObject(state, 
     {
         loading: false,
+        error: null,
         articleItems: action.articleItems
     });
 }
 
-const getLifeReviewFailed = (state) => {
-    return updateObject(state, {loading: false});
+const getLifeReviewFailed = (state, action) => {
+    console.log('lifeReview reducer error: ',action.error);
+    return updateObject(state, {
+        loading: false,
+        error: action.error
+    });
 }
 
 const getLifeReviewStart = (state) => {
-    return updateObject(state, {loading: true});
+    return updateObject(state, {
+        loading: true,
+        error: null
+    });
 }
 
 
@@ -29,7 +38,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_LIFEREVIEW_SUCCESS:
             return getLifeReviewSuccess(state, action);
         case actionTypes.GET_LIFEREVIEW_FAILED:
-            return getLifeReviewFailed(state);
+            return getLifeReviewFailed(state, action);
         case actionTypes.GET_LIFEREVIEW_START:
             return getLifeReviewStart(state);
         default:

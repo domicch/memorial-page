@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from '../../network/axios';
+import { app } from "../../base";
 
 export const getLifeReviewSuccess = (articleItems) => {
     return {
@@ -25,25 +25,43 @@ export const getLifeReview = () => {
     return dispatch => {
         dispatch(getLifeReviewStart());
 
-        axios.get('/lifereview.json')
-        .then(res => {
-            const articleItems = [];
+        // axios.get('/lifereview.json')
+        // .then(res => {
+        //     const articleItems = [];
 
-            for(const id in res.data){
-                articleItems.push({ 
-                    ...res.data[id],
-                    id: id
+        //     for(const id in res.data){
+        //         articleItems.push({ 
+        //             ...res.data[id],
+        //             id: id
+        //         });
+        //     }
+
+        //     articleItems.sort((a,b) => {
+        //         return a.order - b.order;
+        //     });
+
+        //     dispatch(getLifeReviewSuccess(articleItems));
+        // })
+        // .catch(err => {
+        //     dispatch(getLifeReviewFailed());
+        // });
+
+        app.firestore().collection("lifereview").orderBy("order").get()
+            .then(snapshot => {
+                const articleItems = [];
+
+                snapshot.forEach(articleItem => {
+                    
+                    articleItems.push({
+                        ...articleItem.data(),
+                        id: articleItem.id
+                    });
                 });
-            }
 
-            articleItems.sort((a,b) => {
-                return a.order - b.order;
+                dispatch(getLifeReviewSuccess(articleItems));
+            })
+            .catch(err => {
+                dispatch(getLifeReviewFailed(err));
             });
-
-            dispatch(getLifeReviewSuccess(articleItems));
-        })
-        .catch(err => {
-            dispatch(getLifeReviewFailed());
-        });
     }
 }
