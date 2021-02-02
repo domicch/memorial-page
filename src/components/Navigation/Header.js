@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { withTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 
 import * as actions from '../../store/actions/index';
 
@@ -43,17 +44,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
     const classes = useStyles();
-    const { sections, title } = props;
-    const [value, setValue] = React.useState(0);
-    const {t} = props;
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+    const { t, location } = props;
 
     let logoutButton = null;
     if (props.authenticated) {
-        logoutButton = (<Button 
+        logoutButton = (<Button
             onClick={props.onLogout}
             // variant="outlined" 
             size="small"
@@ -61,7 +56,8 @@ const Header = (props) => {
             {t('general.logout')}
         </Button>);
     }
-    
+
+    console.log(props.location);
 
     return (
         <React.Fragment>
@@ -75,19 +71,34 @@ const Header = (props) => {
                     className={classes.toolbarTitle}
                 >
                     {t('header.title')}
-        </Typography>
+                </Typography>
                 {logoutButton}
             </Toolbar>
-            <Toolbar variant="dense" 
+            <Toolbar variant="dense"
                 className={classes.toolbarSecondary}
             >
                 {/* <Link to="/">Life</Link>
         <Link to="/messages">Messages</Link>
         <Link to="/newmessage">New Message</Link> */}
-                <Tabs value={value} onChange={handleChange}>
-                    <Tab label={t('toolbar.life')} component={Link} to="/" />
-                    <Tab label={t('toolbar.messages')} component={Link} to="/messages" />
-                    <Tab label={t('toolbar.new_message')}component={Link} to="/newmessage" />
+                <Tabs value={location.pathname}>
+                    <Tab
+                        label={t('toolbar.life')}
+                        component={Link}
+                        to="/"
+                        value="/"
+                    />
+                    <Tab
+                        label={t('toolbar.messages')}
+                        component={Link}
+                        to="/messages"
+                        value="/messages"
+                    />
+                    <Tab
+                        label={t('toolbar.new_message')}
+                        component={Link}
+                        to="/newmessage"
+                        value="/newmessage"
+                    />
                 </Tabs>
             </Toolbar>
         </React.Fragment>
@@ -106,4 +117,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Header));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(withRouter(Header)));
