@@ -66,22 +66,25 @@ const Message = (props) => {
     return (
         <Card className={classes.root} variant="outlined">
             <CardContent>
-                <Typography className={classes.content} variant="body1" style={{ whiteSpace: 'pre-line' }}
+                <Typography className={classes.content} 
+                    variant="body1" 
+                    style={{ whiteSpace: 'pre-line' }}
                     gutterBottom paragraph>
                     {props.content}
-                </Typography>
+                </Typography>                
+                {imageCards}
                 <Typography
                     className={classes.content}
                     component="h2"
                     variant="h5"
                     color="inherit"
                     align="right"
-                    noWrap
+                    style={{ whiteSpace: 'pre-line' }}
+                    // noWrap
                     gutterBottom paragraph
                 >
                     {props.author}
                 </Typography>
-                {imageCards}
             </CardContent>
         </Card>
     );

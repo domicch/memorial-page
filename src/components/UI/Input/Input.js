@@ -1,10 +1,12 @@
 import React from 'react';
 import {TextField} from '@material-ui/core';
+import { withTranslation } from 'react-i18next';
 
 const input = (props) => {
     let inputElement = null;
     let errorMessage = null;
     let config = {};
+    const {t} = props;
 
     if(props.validation.required){
         config['required'] = true;
@@ -14,7 +16,7 @@ const input = (props) => {
         if(props.invalid){
             errorMessage = props.errorMessage 
             ? props.errorMessage 
-            : 'Invalid input';
+            : t('errors.invalid_input');
 
             config['helperText'] = errorMessage;
             config['error'] = true;
@@ -67,4 +69,4 @@ const input = (props) => {
     return inputElement;
 };
 
-export default input;
+export default withTranslation()(input);

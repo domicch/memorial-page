@@ -30,3 +30,6 @@ npm install --save typescript
 
 # google login button
 npm install --save react-google-button
+
+# localization
+npm install --save i18next react-i18next

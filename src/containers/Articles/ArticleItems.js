@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
+import { withTranslation } from 'react-i18next';
 
 import Article from '../../components/Article/Article';
 import * as actions from '../../store/actions/index';
@@ -21,13 +22,14 @@ class ArticleItems extends Component {
 
     render() {
         let articleItems = null;
+        const{t} = this.props;
 
         if (this.props.loading) {
             articleItems = <Grid item><Spinner /> </Grid>
         } else if (this.props.error) {
             articleItems = (
                 <Grid item>
-                    <ErrorCard onAction={this.refreshPage} actionText="Refresh Page" />
+                    <ErrorCard onAction={this.refreshPage} actionText={t('general.refresh')} />
                 </Grid>
             );
         } else if (this.props.articleItems) {
@@ -85,4 +87,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleItems);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(ArticleItems));

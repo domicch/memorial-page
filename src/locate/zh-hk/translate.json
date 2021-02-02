@@ -1,0 +1,33 @@
+{
+    "translations": {
+        "header": {
+            "title": "陳銘洪醫生"
+        },
+        "toolbar": {
+            "life": "生平",
+            "messages": "留言",
+            "new_message": "新增留言"
+        },
+        "lifereview": {
+            "heading": "The world is not my home. I am just passing through."
+        },
+        "createmessage": {
+            "must_signin": "如欲留言，請先登入，或把留言發送到 catanddominic@gmail.com。",
+            "google_login": "以 Google 身分登入",
+            "name": "你的名字",
+            "message": "你的留言",
+            "upload_image": "上載照片（最多3張)",
+            "submit": "發表留言",
+            "submit_success": "你的留言已成功發表"
+        },
+        "errors": {
+            "invalid_input": "輸入錯誤",
+            "error_default": "發生錯誤"
+        },
+        "general": {
+            "ok": "確定",
+            "logout": "登出",
+            "refresh": "重新載入"
+        }
+    }
+}

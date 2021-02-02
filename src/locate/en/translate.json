@@ -1,0 +1,16 @@
+{
+    "translations": {
+        "toolbar": {
+            "life": "Life",
+            "messages": "Messages",
+            "new_message": "Create Message"
+        },
+        "lifereview": {
+            "heading": "Dr. M H Chan"
+        },
+        "createmessage": {
+            "must_signin": "Please sign in first to leave your message, or you can email your message to catanddominic@gmail.com",
+            "google_login": "Sign in with Google"
+        }
+    }
+}

@@ -5,6 +5,7 @@ import { Toolbar, Button, Typography, Tabs, Tab } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import zIndex from '@material-ui/core/styles/zIndex';
+import { withTranslation } from 'react-i18next';
 
 import * as actions from '../../store/actions/index';
 
@@ -44,6 +45,7 @@ const Header = (props) => {
     const classes = useStyles();
     const { sections, title } = props;
     const [value, setValue] = React.useState(0);
+    const {t} = props;
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -56,9 +58,10 @@ const Header = (props) => {
             // variant="outlined" 
             size="small"
         >
-            Logout
+            {t('general.logout')}
         </Button>);
     }
+    
 
     return (
         <React.Fragment>
@@ -71,7 +74,7 @@ const Header = (props) => {
                     noWrap
                     className={classes.toolbarTitle}
                 >
-                    M H Chan
+                    {t('header.title')}
         </Typography>
                 {logoutButton}
             </Toolbar>
@@ -82,9 +85,9 @@ const Header = (props) => {
         <Link to="/messages">Messages</Link>
         <Link to="/newmessage">New Message</Link> */}
                 <Tabs value={value} onChange={handleChange}>
-                    <Tab label="Life" component={Link} to="/" />
-                    <Tab label="Messages" component={Link} to="/messages" />
-                    <Tab label="New Message" component={Link} to="/newmessage" />
+                    <Tab label={t('toolbar.life')} component={Link} to="/" />
+                    <Tab label={t('toolbar.messages')} component={Link} to="/messages" />
+                    <Tab label={t('toolbar.new_message')}component={Link} to="/newmessage" />
                 </Tabs>
             </Toolbar>
         </React.Fragment>
@@ -103,4 +106,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Header));

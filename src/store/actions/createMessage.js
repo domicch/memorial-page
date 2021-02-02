@@ -82,7 +82,8 @@ export const createMessage = (userId, message, imageFiles) => {
                         resizedImageURL = await uploadImage(
                             'messages/resized/' + fileNamePrefix + '-' + i + '-r1',
                             resizedImageBase64,
-                            originalImage.type,
+                            // originalImage.type,
+                            'image/jpeg',
                             true);
 
                         image['resizedImageURL'] = resizedImageURL;

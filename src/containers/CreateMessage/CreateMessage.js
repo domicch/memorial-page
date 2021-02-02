@@ -3,6 +3,7 @@ import { Button, Grid, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { app } from '../../base';
+import { withTranslation } from 'react-i18next';
 
 import Input from '../../components/UI/Input/Input'
 import { checkFormFieldValid, updateArray } from '../../utility/utility';
@@ -13,12 +14,14 @@ import ImageCard from '../../components/UI/Image/ImageCard';
 import { resizeImage } from '../../utility/Image/ImageResizer';
 import ContentContainer from '../../components/UI/ContentContainer/ContentContainer';
 import MessageCard from '../../components/UI/Cards/MessageCard';
-// import GoogleLoginButton from '../../components/UI/Buttons/GoogleLoginButton';
 import GoogleButton from 'react-google-button'
 
 const styles = theme => ({
     root: {
         paddingBottom: 100
+    },
+    login: {
+        paddingTop: 50
     },
     form: {
         '& .MuiTextField-root': {
@@ -38,9 +41,10 @@ class CreateMessage extends Component {
         controls: [
             {
                 id: 'author',
-                elementType: 'input',
+                elementType: 'textarea',
                 elementConfig: {
-                    label: 'Your name'
+                    label: this.props.t('createmessage.name'),
+                    rows: 2
                 },
                 value: '',
                 validation: {
@@ -53,7 +57,7 @@ class CreateMessage extends Component {
                 id: 'content',
                 elementType: 'textarea',
                 elementConfig: {
-                    label: 'Please leave your message',
+                    label: this.props.t('createmessage.message'),
                     rows: 15
                 },
                 value: '',
@@ -115,11 +119,13 @@ class CreateMessage extends Component {
 
     resetForm = () => {
         const newControls = this.state.controls.map(control => {
-            return {...control,...{
-                value: '',
-                valid: false,
-                modified: false
-            }};
+            return {
+                ...control, ...{
+                    value: '',
+                    valid: false,
+                    modified: false
+                }
+            };
         });
 
         this.setState({
@@ -141,7 +147,9 @@ class CreateMessage extends Component {
             for (let i = 0; i < imageFilesList.length; i++) {
                 let file = imageFilesList[i];
 
-                if (i < 3 && (file.type === 'image/jpeg' || file.type === 'image/x-png')) {
+                if (i < 3 && (file.type === 'image/jpeg' 
+                || file.type === 'image/x-png'
+                || file.type === 'image/png')) {
                     imageFiles.push({ original: file });
                 }
             }
@@ -151,13 +159,19 @@ class CreateMessage extends Component {
                 let file = imageFiles[index];
                 let contentType = null;
 
-                if (file.original.type === 'image/jpeg') {
-                    contentType = 'JPEG';
-                } else if (file.original.type === 'image/x-png') {
-                    contentType = 'PNG';
-                }
+                // if (file.original.type === 'image/jpeg') {
+                //     contentType = 'JPEG';
+                // } else if (file.original.type === 'image/x-png'
+                // || file.original.type === 'image/png') {
+                //     contentType = 'PNG';
+                // }
+                contentType = 'JPEG';
 
-                imageFiles[index]['resized'] = await resizeImage(file.original, contentType);
+                try{
+                    imageFiles[index]['resized'] = await resizeImage(file.original, contentType);
+                }catch(error){
+                    console.log(error);
+                }
             };
 
             this.setState({
@@ -175,18 +189,19 @@ class CreateMessage extends Component {
         const additionalConfig = { fullWidth: true };
         const buttonConfig = {};
         let mainContent = null;
+        const { t, classes } = this.props;
 
         if (this.props.createMessageSuccess) {
             mainContent = <Grid item xs={12} >
-                <MessageCard 
-                    message="Create message success"
-                    actionText="OK"
+                <MessageCard
+                    message={t('createmessage.submit_success')}
+                    actionText={t('general.ok')}
                     onAction={this.resetForm} />
             </Grid>;
         }
         else {
             if (this.props.authenticated) {
-                
+
 
                 // let resizedImageCard = null;
                 // if (this.state.resizedImageBase64) {
@@ -203,11 +218,11 @@ class CreateMessage extends Component {
                     mainContent = <Grid item xs={12}><Spinner /></Grid>;
                 } else {
                     let createMessageError = null;
-                    
+
                     if (!this.state.isFormValid) {
                         buttonConfig['disabled'] = true;
                     }
-    
+
                     let imageCards = null;
                     if (this.state.imageFiles.length > 0) {
                         let images = this.state.imageFiles.map((files, index) => {
@@ -215,7 +230,7 @@ class CreateMessage extends Component {
                             if (files.resized) {
                                 imageFilePath = files.resized;
                             }
-    
+
                             return (
                                 <Grid item xs={12} sm={10} md={8} key={index}>
                                     <ImageCard
@@ -224,7 +239,7 @@ class CreateMessage extends Component {
                                 </Grid>
                             );
                         });
-    
+
                         imageCards = (
                             <Grid container justify="center" style={{ margin: '20px 0px' }}>
                                 {images}
@@ -246,7 +261,7 @@ class CreateMessage extends Component {
                     mainContent = (
                         <React.Fragment>
                             <Grid item xs={12}>
-                                <form className={this.props.classes.form} >
+                                <form className={classes.form} >
                                     {this.state.controls.map((formElement, index) => {
                                         return (
                                             <Input
@@ -268,12 +283,22 @@ class CreateMessage extends Component {
                                 </form>
                             </Grid>
                             <Grid item xs={12}>
+                                <Typography variant="body1">
+                                    {t('createmessage.upload_image')}
+                                </Typography>
                                 <ImageInput
                                     onChange={(e) => this.imageChosenHandler(e)} />
                                 {imageCards}
                             </Grid>
                             <Grid item xs={12}>
-                                <Button variant="contained" color="primary" {...buttonConfig} onClick={this.submitHandler}>Submit</Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    {...buttonConfig}
+                                    onClick={this.submitHandler}
+                                >
+                                    {t('createmessage.submit')}
+                                </Button>
                             </Grid>
                             {createMessageError}
                         </React.Fragment>
@@ -281,13 +306,16 @@ class CreateMessage extends Component {
                 };
             } else {
                 mainContent = (
-                    <Grid item xs={12} className={this.props.classes.form}>
-                        <Typography variant="body1">
-                            You must sign in with your Google account in order to leave a message
-                    </Typography>
-                        {/* <Button onClick={this.props.onGoogleLogin}>Google Login</Button> */}
-                        <GoogleButton onClick={this.props.onGoogleLogin} />
-                    </Grid>
+                    <React.Fragment>
+                        <Grid item xs={12}>
+                            <Typography variant="body1" className={classes.login}>
+                                {t('createmessage.must_signin')}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <GoogleButton label={t('createmessage.google_login')} onClick={this.props.onGoogleLogin} />
+                        </Grid>
+                    </React.Fragment>
                 );
 
             }
@@ -295,7 +323,7 @@ class CreateMessage extends Component {
 
         return (
             <ContentContainer>
-                <Grid container justify="center" spacing={2} className={this.props.classes.root}>
+                <Grid container justify="center" spacing={2} className={classes.root}>
                     {mainContent}
                 </Grid>
             </ContentContainer>
@@ -323,4 +351,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CreateMessage));
+export default connect(mapStateToProps, mapDispatchToProps)
+    (withTranslation()(
+        withStyles(styles)(CreateMessage)
+    ));

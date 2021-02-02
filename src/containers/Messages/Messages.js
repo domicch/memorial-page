@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { withTranslation } from 'react-i18next';
 
 import Message from '../../components/Message/Message';
 import * as actions from '../../store/actions/index';
@@ -29,13 +30,14 @@ class Messages extends Component {
 
     render() {
         let messages = null;
+        const {t} = this.props;
 
         if(this.props.loading){
             messages = <Grid item><Spinner/></Grid>;
         } else if (this.props.error) {
             messages = (
                 <Grid item>
-                    <ErrorCard onAction={this.refreshPage} actionText="Refresh Page" />
+                    <ErrorCard onAction={this.refreshPage} actionText={t('general.refresh')} />
                 </Grid>
             );
         }
@@ -83,4 +85,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
-    (withStyles(styles)(Messages));
+(withTranslation()(withStyles(styles)(Messages)));
