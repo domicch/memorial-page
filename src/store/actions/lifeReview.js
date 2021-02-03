@@ -25,27 +25,6 @@ export const getLifeReview = () => {
     return dispatch => {
         dispatch(getLifeReviewStart());
 
-        // axios.get('/lifereview.json')
-        // .then(res => {
-        //     const articleItems = [];
-
-        //     for(const id in res.data){
-        //         articleItems.push({ 
-        //             ...res.data[id],
-        //             id: id
-        //         });
-        //     }
-
-        //     articleItems.sort((a,b) => {
-        //         return a.order - b.order;
-        //     });
-
-        //     dispatch(getLifeReviewSuccess(articleItems));
-        // })
-        // .catch(err => {
-        //     dispatch(getLifeReviewFailed());
-        // });
-
         app.firestore().collection("lifereview").orderBy("order").get()
             .then(snapshot => {
                 const articleItems = [];

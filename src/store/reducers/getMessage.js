@@ -2,46 +2,46 @@ import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../../utility/utility';
 
 const initialState = {
-    messages: null,
+    message: null,
     loading: false,
     error: null
 };
 
-const getMessagesSuccess = (state, action) => {
+const getMessageSuccess = (state, action) => {
     
     return updateObject(state, 
     {
         loading: false,
         error: null,
-        messages: action.messages
+        message: action.message
     });
 }
 
-const getMessagesFailed = (state, action) => {
+const getMessageFailed = (state, action) => {
     return updateObject(state, {
         loading: false,
         error: action.error,
-        messages: null
+        message: null
     });
 }
 
-const getMessagesStart = (state) => {
+const getMessageStart = (state) => {
     return updateObject(state, {
         loading: true,
         error: null,
-        messages: null
+        message: null
     });
 }
 
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.GET_MESSAGES_SUCCESS:
-            return getMessagesSuccess(state, action);
-        case actionTypes.GET_MESSAGES_FAILED:
-            return getMessagesFailed(state, action);
-        case actionTypes.GET_MESSAGES_START:
-            return getMessagesStart(state, action);
+        case actionTypes.GET_MESSAGE_SUCCESS:
+            return getMessageSuccess(state, action);
+        case actionTypes.GET_MESSAGE_FAILED:
+            return getMessageFailed(state, action);
+        case actionTypes.GET_MESSAGE_START:
+            return getMessageStart(state, action);
         default:
             return state;
     }

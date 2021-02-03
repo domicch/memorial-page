@@ -7,6 +7,7 @@ import MUILayout from './hoc/Layouts/Layout';
 import LifeReview from './containers/LifeReview/LifeReview';
 import Messages from './containers/Messages/Messages';
 import CreateMessage from './containers/CreateMessage/CreateMessage';
+import UpdateMessage from './containers/CreateMessage/UpdateMessage';
 import * as actions from './store/actions/index';
 
 
@@ -22,6 +23,7 @@ class App extends Component {
       <Switch>
         <Route path="/messages" component={Messages} />
         <Route path="/newmessage" component={CreateMessage} />
+        <Route path="/updatemessage" component={UpdateMessage} />
         <Route path="/" component={LifeReview} />
       </Switch>
     );

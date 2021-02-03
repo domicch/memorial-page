@@ -14,6 +14,8 @@ import lifeReviewReducer from './store/reducers/lifeReview';
 import messagesReducer from './store/reducers/messages';
 import createMessageReducer from './store/reducers/createMessage';
 import authReducer from './store/reducers/auth';
+import getMessageReducer from './store/reducers/getMessage';
+import updateMessageReducer from './store/reducers/updateMessage';
 
 // for redux dev-tools Chrome extension. Please remove in PROD env
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -22,7 +24,9 @@ const rootReducer = combineReducers({
   lifeReview: lifeReviewReducer,
   messages: messagesReducer,
   createMessage: createMessageReducer,
-  auth: authReducer
+  auth: authReducer,
+  getMessage: getMessageReducer,
+  updateMessage: updateMessageReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(

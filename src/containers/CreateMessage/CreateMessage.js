@@ -34,8 +34,6 @@ const styles = theme => ({
     }
 });
 
-const storage = app.storage();
-
 class CreateMessage extends Component {
     state = {
         controls: [
@@ -69,6 +67,7 @@ class CreateMessage extends Component {
             }
         ],
         isFormValid: false,
+        imageError: null,
         imageFiles: [] // {original: file, resized: base64}
     }
 
@@ -131,10 +130,25 @@ class CreateMessage extends Component {
         this.setState({
             controls: newControls,
             isFormValid: false,
-            imageFiles: []
+            imageFiles: [],
+            imageError: null
         });
 
         this.props.onCreateMessageReset();
+    }
+
+    validateImage = (file) => {
+        if(file.type !== 'image/jpeg' 
+            && file.type !== 'image/x-png'
+            && file.type !== 'image/png'){
+            return this.props.t('createmessage.errors.image_format');
+        }
+
+        if(file.size > 10485760){
+            return this.props.t('createmessage.errors.image_size');
+        }
+
+        return null;
     }
 
     imageChosenHandler = async (event) => {
@@ -146,41 +160,48 @@ class CreateMessage extends Component {
 
             for (let i = 0; i < imageFilesList.length; i++) {
                 let file = imageFilesList[i];
+                let imageError = null;
 
-                if (i < 3 && (file.type === 'image/jpeg' 
-                || file.type === 'image/x-png'
-                || file.type === 'image/png')) {
-                    imageFiles.push({ original: file });
+                imageError = this.validateImage(file);
+                if(imageError !== null){
+                    this.setState({
+                        imageFiles: [],
+                        imageError: imageError
+                    });
+
+                    return;
                 }
+                imageFiles.push({ original: file });
             }
 
-            // imageFiles.forEach(async(file, index) => {
             for (let index = 0; index < imageFiles.length; index++) {
                 let file = imageFiles[index];
                 let contentType = null;
 
-                // if (file.original.type === 'image/jpeg') {
-                //     contentType = 'JPEG';
-                // } else if (file.original.type === 'image/x-png'
-                // || file.original.type === 'image/png') {
-                //     contentType = 'PNG';
-                // }
                 contentType = 'JPEG';
 
                 try{
                     imageFiles[index]['resized'] = await resizeImage(file.original, contentType);
                 }catch(error){
                     console.log(error);
+                    this.setState({
+                        imageFiles: [],
+                        imageError: this.props.t('createmessage.errors.image_resize')
+                    });
+
+                    return;
                 }
             };
 
             this.setState({
-                imageFiles: imageFiles
+                imageFiles: imageFiles,
+                imageError: null
             });
 
         } else {
             this.setState({
-                imageFiles: []
+                imageFiles: [],
+                imageError: null
             });
         }
     }
@@ -221,6 +242,14 @@ class CreateMessage extends Component {
 
                     if (!this.state.isFormValid) {
                         buttonConfig['disabled'] = true;
+                    }
+
+                    let imageError = null
+                    if(this.state.imageError){
+                        imageError = (<Typography
+                            variant="body1"
+                            color="error"
+                        >{this.state.imageError}</Typography>)
                     }
 
                     let imageCards = null;
@@ -288,6 +317,7 @@ class CreateMessage extends Component {
                                 </Typography>
                                 <ImageInput
                                     onChange={(e) => this.imageChosenHandler(e)} />
+                                {imageError}
                                 {imageCards}
                             </Grid>
                             <Grid item xs={12}>
@@ -313,7 +343,7 @@ class CreateMessage extends Component {
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <GoogleButton label={t('createmessage.google_login')} onClick={this.props.onGoogleLogin} />
+                            <GoogleButton label={t('login.google_login')} onClick={this.props.onGoogleLogin} />
                         </Grid>
                     </React.Fragment>
                 );

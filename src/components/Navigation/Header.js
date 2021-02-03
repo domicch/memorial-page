@@ -59,6 +59,22 @@ const Header = (props) => {
 
     console.log(props.location);
 
+    let tabsValue = '/';
+    let paths = props.location.pathname.match(new RegExp('^/\\w*'));
+    if(paths){
+        switch(paths[0]) {
+            case '/messages':
+                tabsValue = paths[0];
+                break;
+            case '/newmessage':
+                tabsValue=paths[0];
+                break;
+            default:
+                tabsValue='/';
+                break;
+        }
+    }
+
     return (
         <React.Fragment>
             <Toolbar className={classes.toolbar}>
@@ -80,7 +96,7 @@ const Header = (props) => {
                 {/* <Link to="/">Life</Link>
         <Link to="/messages">Messages</Link>
         <Link to="/newmessage">New Message</Link> */}
-                <Tabs value={location.pathname}>
+                <Tabs value={tabsValue}>
                     <Tab
                         label={t('toolbar.life')}
                         component={Link}

@@ -13,21 +13,38 @@
         },
         "createmessage": {
             "must_signin": "如欲留言，請先登入，或把留言發送到 catanddominic@gmail.com。",
-            "google_login": "以 Google 身分登入",
             "name": "你的名字",
             "message": "你的留言",
             "upload_image": "上載照片（最多3張)",
             "submit": "發表留言",
-            "submit_success": "你的留言已成功發表"
+            "submit_success": "你的留言已成功發表",
+            "errors":{
+                "image_format": "只接受 JPG 或 PNG 檔",
+                "image_size": "每張照片不可超過 10 MB",
+                "image_resize": "照片處理錯誤"
+            }
+        },
+        "login": {
+            "google_login": "以 Google 身分登入"
+        },
+        "messages": {
+            "edit_message": "編輯"
+        },
+        "updatemessage": {
+            "title": "更新留言",
+            "success": "留言已成功更新"
         },
         "errors": {
             "invalid_input": "輸入錯誤",
-            "error_default": "發生錯誤"
+            "error_default": "發生錯誤",
+            "record_not_found": "資料不存在"
         },
         "general": {
             "ok": "確定",
             "logout": "登出",
-            "refresh": "重新載入"
+            "refresh": "重新載入",
+            "cancel": "取消",
+            "must_signin": "請先登入"
         }
     }
 }

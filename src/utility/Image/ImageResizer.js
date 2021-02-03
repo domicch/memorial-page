@@ -30,17 +30,21 @@ import Resizer from 'react-image-file-resizer';
 //     }
 // }
 
-export const resizeImage = (imageFile, imageFormat) => new Promise(resolve => {
-    Resizer.imageFileResizer(
-        imageFile,
-        1280,
-        1280,
-        imageFormat,
-        90,
-        0,
-        uri => {
-            resolve(uri);
-        },
-        'base64'
-    );
+export const resizeImage = (imageFile, imageFormat) => new Promise((resolve, reject) => {
+    try{
+        Resizer.imageFileResizer(
+            imageFile,
+            1280,
+            1280,
+            imageFormat,
+            90,
+            0,
+            uri => {
+                resolve(uri);
+            },
+            'base64'
+        );
+    }catch(err){
+        reject(err);
+    }
 });

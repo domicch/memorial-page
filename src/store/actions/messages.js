@@ -25,27 +25,6 @@ export const getMessages = () => {
     return dispatch => {
         dispatch(getMessagesStart());
 
-        // axios.get('/messages.json')
-        // .then(res => {
-        //     const messages = [];
-
-        //     for(const id in res.data){
-        //         messages.push({ 
-        //             ...res.data[id],
-        //             id: id
-        //         });
-        //     }
-
-        //     messages.sort((a,b) => {
-        //         return a.order - b.order;
-        //     });
-
-        //     dispatch(getMessagesSuccess(messages));
-        // })
-        // .catch(err => {
-        //     dispatch(getMessagesFailed());
-        // });
-
         app.firestore().collection("messages").orderBy("order").get()
             .then(snapshot => {
                 const messages = [];

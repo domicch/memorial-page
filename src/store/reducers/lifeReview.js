@@ -18,17 +18,18 @@ const getLifeReviewSuccess = (state, action) => {
 }
 
 const getLifeReviewFailed = (state, action) => {
-    console.log('lifeReview reducer error: ',action.error);
     return updateObject(state, {
         loading: false,
-        error: action.error
+        error: action.error,
+        articleItems: null
     });
 }
 
 const getLifeReviewStart = (state) => {
     return updateObject(state, {
         loading: true,
-        error: null
+        error: null,
+        articleItems: null
     });
 }
 

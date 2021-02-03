@@ -1,8 +1,8 @@
 import React from 'react';
 import Title from '../ArticleItem/Title';
-import { Typography, Card, CardContent, Grid, Paper, GridList, GridListTile } from '@material-ui/core';
+import { Typography, Card, CardContent, Grid, CardActions, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { blue } from '@material-ui/core/colors';
+import { withTranslation } from 'react-i18next';
 
 import ImageCard from '../UI/Image/ImageCard';
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
         justifyContent: 'space-around',
         overflow: 'hidden',
         // backgroundColor: theme.palette.background.paper,
-      },
+    },
     // gridList: {
     //     width: 500,
     //     height: 450,
@@ -31,6 +31,7 @@ const useStyles = makeStyles({
 const Message = (props) => {
     let title = null;
     const classes = useStyles();
+    const {t} = props;
 
     if (props.title) {
         title = (
@@ -63,15 +64,28 @@ const Message = (props) => {
         );
     }
 
+    let edit = null;
+    if(props.showEdit){
+        edit = (
+            <CardActions>
+                <Button color="primary" variant="contained"
+                    onClick={props.onEditClicked}
+                >
+                    {t('messages.edit_message')}
+                </Button>
+            </CardActions>
+        );
+    }
+
     return (
         <Card className={classes.root} variant="outlined">
             <CardContent>
-                <Typography className={classes.content} 
-                    variant="body1" 
+                <Typography className={classes.content}
+                    variant="body1"
                     style={{ whiteSpace: 'pre-line' }}
                     gutterBottom paragraph>
                     {props.content}
-                </Typography>                
+                </Typography>
                 {imageCards}
                 <Typography
                     className={classes.content}
@@ -86,8 +100,9 @@ const Message = (props) => {
                     {props.author}
                 </Typography>
             </CardContent>
+            {edit}
         </Card>
     );
 }
 
-export default Message;
+export default withTranslation()(Message);

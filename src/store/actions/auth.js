@@ -44,17 +44,8 @@ export const googleLogin = () => {
                 /** @type {firebase.auth.OAuthCredential} */
                 const credential = result.credential;
 
-                console.log(result);
                 dispatch(loginSuccess('google.com', result.user.uid));
             }).catch((error) => {
-                console.log(error);
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // The email of the user's account used.
-                var email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                var credential = error.credential;
                 dispatch(loginFailed(error));
             });
     }

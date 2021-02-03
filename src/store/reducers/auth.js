@@ -20,11 +20,21 @@ const loginSuccess = (state, action) => {
 }
 
 const loginFailed = (state) => {
-    return updateObject(state, {loading: false});
+    return updateObject(state, {
+        loading: false,
+        authenticated: false,
+        authProvider: null,
+        userId: null
+    });
 }
 
 const loginStart = (state) => {
-    return updateObject(state, {loading: true});
+    return updateObject(state, {
+        loading: true,
+        authenticated: false,
+        authProvider: null,
+        userId: null
+    });
 }
 
 const logoutSuccess = (state, action) => {

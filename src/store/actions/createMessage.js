@@ -51,6 +51,7 @@ export const createMessage = (userId, message, imageFiles) => {
 
         const fileNamePrefix = userId + '-' + new Date().getTime();
         const messageImages = [];
+        const messageCopy = {...message}
 
         for (let i = 0; i < imageFiles.length; i++) {
             let originalImage = imageFiles[i].original;
@@ -97,14 +98,14 @@ export const createMessage = (userId, message, imageFiles) => {
             }
         }
 
-        message['imageFiles'] = messageImages;
+        messageCopy['imageFiles'] = messageImages;
 
         // add order and timestamp as server timestamp
-        message['timestamp'] = firebase.firestore.FieldValue.serverTimestamp();
-        message['order'] = firebase.firestore.FieldValue.serverTimestamp();
-        message['userId'] = userId;
+        messageCopy['timestamp'] = firebase.firestore.FieldValue.serverTimestamp();
+        messageCopy['order'] = firebase.firestore.FieldValue.serverTimestamp();
+        messageCopy['userId'] = userId;
 
-        app.firestore().collection("messages").add(message)
+        app.firestore().collection("messages").add(messageCopy)
             .then(response => {
                 console.log("createMessage: success", response);
                 dispatch(createMessageSuccess());
