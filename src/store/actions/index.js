@@ -7,15 +7,12 @@ export {
 } from './messages';
 
 export {
-    getMessage
-} from './getMessage';
-
-export {
     createMessage,
     createMessageReset
 } from './createMessage';
 
 export {
+    getMessage,
     updateMessage
 } from './updateMessage';
 

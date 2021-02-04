@@ -164,14 +164,14 @@ class UpdateMessage extends Component {
 const mapStateToProps = state => {
     return {
         loading: state.updateMessage.loading,
-        updateMessageError: state.updateMessage.updateMessageError,
+        updateMessageError: state.updateMessage.error,
         updateMessageSuccess: state.updateMessage.updateMessageSuccess,
 
         loginLoading: state.auth.loading,
         authenticated: state.auth.authenticated,
         userId: state.auth.userId,
 
-        message: state.getMessage.message
+        message: state.updateMessage.message
     }
 }
 

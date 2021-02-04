@@ -46,7 +46,7 @@ class MessageForm extends Component {
                     validation: {
                         required: true
                     },
-                    valid: false,
+                    valid: props.message? true : false,
                     modified: false
                 },
                 {
@@ -62,11 +62,11 @@ class MessageForm extends Component {
                     validation: {
                         required: true
                     },
-                    valid: false,
+                    valid: props.message? true : false,
                     modified: false
                 }
             ],
-            isFormValid: false,
+            isFormValid: props.message? true : false,
             imageModified: false,
             imageError: null,
             imageFiles: [] // {original: file, resized: base64}
