@@ -318,6 +318,7 @@ class CreateMessage extends Component {
                                     {t('createmessage.upload_image')}
                                 </Typography>
                                 <ImageInput
+                                    multiple
                                     onChange={(e) => this.imageChosenHandler(e)} />
                                 {imageError}
                                 {imageCards}

@@ -225,7 +225,6 @@ class MessageForm extends Component {
             buttonConfig['disabled'] = true;
         }
 
-        console.log(this.props.message);
         let imageCards = null;
         let images = null;
 
@@ -301,6 +300,7 @@ class MessageForm extends Component {
                         {t('createmessage.upload_image')}
                     </Typography>
                     <ImageInput
+                        multiple
                         onChange={(e) => this.imageChosenHandler(e)} />
                     {imageError}
                     {imageCards}

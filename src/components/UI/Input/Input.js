@@ -8,7 +8,7 @@ const input = (props) => {
     let config = {};
     const {t} = props;
 
-    if(props.validation.required){
+    if(props.validation && props.validation.required){
         config['required'] = true;
     }
 

@@ -13,8 +13,10 @@ import i18n from './i18n'
 import lifeReviewReducer from './store/reducers/lifeReview';
 import messagesReducer from './store/reducers/messages';
 import createMessageReducer from './store/reducers/createMessage';
+import createArticleReducer from './store/reducers/createArticle';
 import authReducer from './store/reducers/auth';
 import updateMessageReducer from './store/reducers/updateMessage';
+import updateArticleReducer from './store/reducers/updateArticle';
 
 // for redux dev-tools Chrome extension. Please remove in PROD env
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -24,7 +26,9 @@ const rootReducer = combineReducers({
   messages: messagesReducer,
   createMessage: createMessageReducer,
   auth: authReducer,
-  updateMessage: updateMessageReducer
+  updateMessage: updateMessageReducer,
+  createArticle: createArticleReducer,
+  updateArticle: updateArticleReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers(

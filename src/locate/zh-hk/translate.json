@@ -11,6 +11,25 @@
         "lifereview": {
             "heading": "The world is not my home. I am just passing through."
         },
+        "createarticle": {
+            "title": "標題",
+            "must_signin": "請先登入",
+            "content": "內容",
+            "caption": "照片描述",
+            "upload_image": "上載照片（最多1張)",
+            "submit": "發表留言",
+            "submit_success": "你的留言已成功發表",
+            "errors":{
+                "image_format": "只接受 JPG 或 PNG 檔",
+                "image_size": "每張照片不可超過 10 MB",
+                "image_resize": "照片處理錯誤"
+            }
+        },
+        "updatearticle": {
+            "title": "更新文章",
+            "submit_success": "你的留言已成功更新",
+            "must_signin": "請先登入"
+        },
         "createmessage": {
             "must_signin": "如欲留言，請先登入，或把留言發送到 catanddominic@gmail.com。",
             "name": "你的名字",
@@ -44,7 +63,9 @@
             "logout": "登出",
             "refresh": "重新載入",
             "cancel": "取消",
-            "must_signin": "請先登入"
+            "must_signin": "請先登入",
+            "edit": "編輯",
+            "delete": "刪除"
         }
     }
 }
