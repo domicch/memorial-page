@@ -48,7 +48,7 @@ const styles = theme => ({
         marginLeft: '5%',
         transform: 'translateX(-5%)',
         position: 'absolute',
-        width: '600px',
+        width: '700px',
         color: 'white',
         fontWeight: 'bold',
         textShadow: '1px 1px black',
@@ -74,7 +74,7 @@ class LifeReview extends Component {
                         <img
                             className={this.props.classes.titleImage}
                             // src={titleImage}
-                            src="https://firebasestorage.googleapis.com/v0/b/dad-page.appspot.com/o/lifereview%2Fcover.jpg?alt=media&token=69c14fb4-3ac8-427f-aaf2-178d57456351"
+                            src="https://firebasestorage.googleapis.com/v0/b/dad-page.appspot.com/o/lifereview%2Fcover.jpg?alt=media&token=98e2a593-7cec-4a5b-8a13-4192b9686df7"
                             alt='image'
                         />
                     </div>
