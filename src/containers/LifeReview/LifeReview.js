@@ -22,8 +22,7 @@ const styles = theme => ({
         width: '1080px',
         marginTop: '20px',
         marginLeft: '50%',
-        transform: 'translateX(-50%)',
-        opacity: '0.8'
+        transform: 'translateX(-50%)'
     },
     profileImage: {
         objectFit: 'contain',
@@ -70,7 +69,7 @@ class LifeReview extends Component {
         return (
             <React.Fragment>
                 <ContentContainer>
-                    <div className={this.props.classes.titleImageDiv}>
+                    {/* <div className={this.props.classes.titleImageDiv}>
                         <img
                             className={this.props.classes.titleImage}
                             // src={titleImage}
@@ -78,16 +77,16 @@ class LifeReview extends Component {
                             alt='image'
                         />
                     </div>
-                    {/* <img
+                    <img
                         className={this.props.classes.profileImage}
                         src={profileImage}
                         alt='image'
-                    /> */}
+                    />
                     <Typography variant="h6" align="center"
                         className={this.props.classes.title}
                     >
                         {t('lifereview.heading')}
-                    </Typography>
+                    </Typography> */}
                     <Grid container justify="center" className={this.props.classes.root}
                     // spacing={2} 
                     >

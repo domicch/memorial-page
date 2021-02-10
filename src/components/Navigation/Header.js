@@ -63,6 +63,9 @@ const Header = (props) => {
     let paths = props.location.pathname.match(new RegExp('^/\\w*'));
     if(paths){
         switch(paths[0]) {
+            case '/lifereview':
+                tabsValue = paths[0];
+                break;
             case '/messages':
                 tabsValue = paths[0];
                 break;
@@ -98,10 +101,16 @@ const Header = (props) => {
         <Link to="/newmessage">New Message</Link> */}
                 <Tabs value={tabsValue}>
                     <Tab
-                        label={t('toolbar.life')}
+                        label={t('toolbar.news')}
                         component={Link}
                         to="/"
                         value="/"
+                    />
+                    <Tab
+                        label={t('toolbar.life')}
+                        component={Link}
+                        to="/lifereview"
+                        value="/lifereview"
                     />
                     <Tab
                         label={t('toolbar.messages')}

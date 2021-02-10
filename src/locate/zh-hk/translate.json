@@ -4,11 +4,13 @@
             "title": "陳銘洪醫生"
         },
         "toolbar": {
+            "news": "通告",
             "life": "生平",
             "messages": "留言",
             "new_message": "新增留言"
         },
         "lifereview": {
+            "heading1": "這世界非我家",
             "heading": "The world is not my home. I am just passing through. (Hebrew 13:14)"
         },
         "createarticle": {

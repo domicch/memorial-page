@@ -8,10 +8,13 @@ import Header from '../../components/Navigation/Header';
 
 const theme = createMuiTheme({
     palette: {
-        primary: indigo,
-        // secondary: amber,
+        primary: indigo
     },
-    
+    typography: {
+        fontFamily: [
+          'sans-serif'
+        ].join(','),
+    }
 });
 
 const useStyles = makeStyles(theme => {

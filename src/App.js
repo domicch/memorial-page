@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import MUILayout from './hoc/Layouts/Layout';
+import News from './containers/News/News';
 import LifeReview from './containers/LifeReview/LifeReview';
 import Messages from './containers/Messages/Messages';
 import CreateMessage from './containers/CreateMessage/CreateMessage';
@@ -20,10 +21,11 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
+        <Route path="/lifereview" component={LifeReview} />
         <Route path="/messages" component={Messages} />
         <Route path="/newmessage" component={CreateMessage} />
         <Route path="/newarticle" component={CreateArticle} />
-        <Route path="/" component={LifeReview} />
+        <Route path="/" component={News} />
       </Switch>
     );
 
