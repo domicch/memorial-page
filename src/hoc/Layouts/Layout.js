@@ -9,12 +9,12 @@ import Header from '../../components/Navigation/Header';
 const theme = createMuiTheme({
     palette: {
         primary: indigo
-    },
-    typography: {
-        fontFamily: [
-          'sans-serif'
-        ].join(','),
     }
+    // typography: {
+    //     fontFamily: [
+    //       'sans-serif'
+    //     ].join(','),
+    // }
 });
 
 const useStyles = makeStyles(theme => {

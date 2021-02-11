@@ -98,11 +98,14 @@ class News extends Component {
                             </Typography>
                             <Typography variant="h4"><strong>陳銘洪醫生</strong></Typography>
                             <Typography variant="h6">
-                                痛於主曆二零二一年一月廿一日
-                                在廣華醫院息勞歸主在世寄居六十五載遺體奉移紅磡萬國殯儀館治喪謹定於主曆
-                                二零二一年二月廿六日（星期五）下午五時在該館地下孝思大禮堂設靈晚上七時
-                                三十分舉行追思會翌日二月廿七日（星期六）上午十時舉行安息禮拜十一時辭靈
-                                隨即出殯奉柩柴灣哥連臣角火葬場舉行火化禮<br/>哀此訃<br/><br/>
+                                痛於主曆2021年1月21日
+                                在廣華醫院息勞歸主在世寄居六十五載遺體奉移紅磡萬國殯儀館治喪謹定於<br/>
+                                <br/>主曆2021年2月26日（星期五)
+                                <br/>下午5時在該館地下孝思大禮堂設靈
+                                <br/>晚上7時30分舉行追思會<br/>
+                                <br/>翌日2月27日（星期六）上午10時舉行安息禮拜
+                                <br/>上午11時辭靈隨即出殯奉柩柴灣哥連臣角火葬場舉行火化禮
+                                <br/>哀此訃<br/><br/>
                             </Typography>
                             <Typography variant="h3">
                             <strong>聞</strong>
@@ -128,10 +131,16 @@ class News extends Component {
                                 如蒙賜賻<br/>
                                 帛金撥捐<br/>
                                 慈善用途<br/><br/>
-                                治喪處：萬國繽儀館<br/>
+                                治喪處：萬國殯儀館<br/>
                                 地址：紅磡暢行道八號<br/>
-                                電話：二三O三一二三四<br/>
-                                （網上直播連結容後公佈）                       
+                                電話：2303 1234<br/>
+                                <br/>
+                                追思會及安息禮拜直播連結:<br/>
+                                請使用 Zoom 軟件登入:<br/>
+                                <a href="https://zoom.us/j/95595672038">https://zoom.us/j/95595672038</a><br/>
+                                <br/>
+                                Meeting ID: 955 9567 2038<br/>
+                                Passcode: 20210226<br/>
                             </Typography>
                         </Grid>
                     </Grid>
