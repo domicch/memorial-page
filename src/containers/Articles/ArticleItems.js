@@ -214,7 +214,8 @@ class ArticleItems extends Component {
                             width: '100%',
                             display: 'flex',
                             flexWrap: 'wrap',
-                            boxSizing: 'border-box'
+                            boxSizing: 'border-box',
+                            overflow: 'visible'
                         }}
                     >
                         {articleItemsArr}

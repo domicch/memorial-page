@@ -134,7 +134,8 @@ class Messages extends Component {
                             width: '100%',
                             display: 'flex',
                             flexWrap: 'wrap',
-                            boxSizing: 'border-box'
+                            boxSizing: 'border-box',
+                            overflow: 'visible'
                         }}
                     // scrollableTarget="messages-grid-container"
                     >
