@@ -132,3 +132,46 @@ export const getMoreMessages = () => {
         }
     }
 }
+
+export const getSingleMessageStart = () => {
+    return {
+        type: actionTypes.GET_SINGLE_MESSAGE_START
+    };
+}
+
+export const getSingleMessageSuccess = (message) => {
+    return {
+        type: actionTypes.GET_SINGLE_MESSAGE_SUCCESS,
+        message: message
+    };
+}
+
+export const getSingleMessageFailed = (error) => {
+    return {
+        type: actionTypes.GET_SINGLE_MESSAGE_FAILED,
+        error: error
+    };
+}
+
+export const getSingleMessage = (messageId) => {
+    return dispatch => {
+        dispatch(getSingleMessageStart());
+
+        app.firestore().collection("messages").doc(messageId).get()
+            .then(snapshot => {
+                if(snapshot.exists) {
+                    dispatch(getSingleMessageSuccess(
+                        {
+                            ...snapshot.data(),
+                            ...{id: snapshot.id}
+                        }
+                    ));
+                }else{
+                    dispatch(getSingleMessageFailed(new Error('errors.record_not_found')));
+                }
+            })
+            .catch(err => {
+                dispatch(getSingleMessageFailed(err));
+            });
+    }
+}

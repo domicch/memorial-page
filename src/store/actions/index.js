@@ -1,5 +1,6 @@
 export {
-    getLifeReview
+    getLifeReview,
+    getMoreLifeReview
 } from './lifeReview';
 
 export {
@@ -16,7 +17,8 @@ export {
 
 export {
     getMessages,
-    getMoreMessages
+    getMoreMessages,
+    getSingleMessage
 } from './messages';
 
 export {

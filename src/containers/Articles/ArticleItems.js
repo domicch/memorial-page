@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Button } from '@material-ui/core';
 import { withTranslation } from 'react-i18next';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import Article from '../../components/Article/Article';
 import * as actions from '../../store/actions/index';
@@ -90,6 +91,10 @@ class ArticleItems extends Component {
         this.props.onUpdateArticleReset();
     }
 
+    getMoreLifeReview = () => {
+        this.props.onGetMoreLifeReview();
+    }
+
     render() {
         let articleItems = null;
         const { t } = this.props;
@@ -129,7 +134,7 @@ class ArticleItems extends Component {
                 </Grid>
             );
         } else if (this.props.articleItems) {
-            articleItems = this.props.articleItems.map(
+            const articleItemsArr = this.props.articleItems.map(
                 article => {
                     if (article.type === 'article') {
                         return (<Grid item key={article.id}
@@ -182,6 +187,41 @@ class ArticleItems extends Component {
                     }
                 }
             );
+
+            let moreError = null;
+
+            if(this.props.moreError){
+                moreError = (
+                    <Grid item xs={12} sm={10}>
+                        <ErrorCard onAction={this.getMoreLifeReview} actionText={t('general.refresh')} />
+                    </Grid>
+                );
+            }
+
+            articleItems = (
+                <React.Fragment>
+                    <InfiniteScroll
+                        dataLength={this.props.articleItems.length}
+                        next={this.getMoreLifeReview}
+                        hasMore={this.props.hasMoreArticles}
+                        loader={
+                            <Grid item xs={12} sm={10}>
+                                <Spinner />
+                            </Grid>
+                        }
+                        style={{
+                            justifyContent: 'center',
+                            width: '100%',
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            boxSizing: 'border-box'
+                        }}
+                    >
+                        {articleItemsArr}
+                    </InfiniteScroll>
+                    {moreError}
+                </React.Fragment>
+            );
         }
 
         let editModal = null;
@@ -229,6 +269,8 @@ const mapStateToProps = state => {
         articleItems: state.lifeReview.articleItems,
         loading: state.lifeReview.loading,
         error: state.lifeReview.error,
+        hasMoreArticles: state.lifeReview.hasMoreArticles,
+        moreError: state.lifeReview.moreError,
 
         updateArticleError: state.updateArticle.error,
         article: state.updateArticle.article,
@@ -245,6 +287,7 @@ const mapDispatchToProps = dispatch => {
         onGetLifeReview: () => dispatch(actions.getLifeReview()),
         onUpdateArticleReset: () => dispatch(actions.updateArticleReset()),
         onDeleteArticle: (articleId, article) => dispatch(actions.deleteArticle(articleId, article)),
+        onGetMoreLifeReview: () => dispatch(actions.getMoreLifeReview())
     }
 }
 

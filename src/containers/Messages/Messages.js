@@ -51,11 +51,11 @@ class Messages extends Component {
     }
 
     handleSuccess = () => {
+        this.props.onGetSingleMessage(this.state.messageId);
         this.setState({
             editMode: false,
             messageId: null
         });
-        this.props.onGetMessages();
     }
 
     getMoreMessage = () => {
@@ -101,6 +101,22 @@ class Messages extends Component {
                     </Grid>
                 );
             }
+
+            // messages = this.props.messages.map(
+            //     message => (
+            //         <Grid item key={message.id} 
+            //             xs={12} sm={10}
+            //         >
+            //             <Message {...message}
+            //                 showEdit={
+            //                     this.props.authenticated
+            //                     && this.props.userId === message.userId
+            //                 }
+            //                 onEditClicked={() => {this.handleEditClick(message.id)}}
+            //             />
+            //         </Grid>
+            //     )
+            // );
 
             messages = (
                 <React.Fragment>
@@ -177,7 +193,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onGetMessages: () => dispatch(actions.getMessages()),
         onGetMessage: (messageId) => dispatch(actions.getMessage(messageId)),
-        onGetMoreMessage: () => dispatch(actions.getMoreMessages())
+        onGetMoreMessage: () => dispatch(actions.getMoreMessages()),
+        onGetSingleMessage: (messageId) => dispatch(actions.getSingleMessage(messageId))
     }
 }
 

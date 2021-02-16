@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import {updateObject, appendArray} from '../../utility/utility';
+import {updateObject, appendArray, updateArray} from '../../utility/utility';
 
 const initialState = {
     messages: null,
@@ -66,6 +66,42 @@ const getMoreMessagesFailed = (state, action) => {
     });
 }
 
+const getSingleMessageStart = (state, action) => {
+    return updateObject(state, {
+        loading: true
+    })
+}
+
+const getSingleMessageSuccess = (state, action) => {
+    const message = action.message;
+    const oldMessages = state.messages;
+
+    if(oldMessages && message){
+        let messageIndex = oldMessages.findIndex(msg => msg.id == message.id);
+
+        if(messageIndex >= 0) {
+            const newMessages = updateArray(oldMessages, message, messageIndex);
+            return updateObject(state,
+            {
+                loading: false,
+                messages: newMessages
+            });
+        }
+    }
+
+    return updateObject(state,
+    {
+        loading: false
+    });
+}
+
+const getSingleMessageFailed = (state, action) => {
+    return updateObject(state,
+    {
+        loading: false
+    });
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.GET_MESSAGES_SUCCESS:
@@ -80,6 +116,12 @@ const reducer = (state = initialState, action) => {
             return getMoreMessagesSuccess(state, action);
         case actionTypes.GET_MORE_MESSAGES_FAILED:
             return getMoreMessagesFailed(state, action);
+        case actionTypes.GET_SINGLE_MESSAGE_START:
+            return getSingleMessageStart(state, action);
+        case actionTypes.GET_SINGLE_MESSAGE_SUCCESS:
+            return getSingleMessageSuccess(state, action);
+        case actionTypes.GET_SINGLE_MESSAGE_FAILED:
+            return getSingleMessageFailed(state, action);
         default:
             return state;
     }
