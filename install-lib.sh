@@ -33,3 +33,6 @@ npm install --save react-google-button
 
 # localization
 npm install --save i18next react-i18next
+
+# infinite scroll (pagination)
+npm install --save react-infinite-scroll-component

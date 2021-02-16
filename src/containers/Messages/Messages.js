@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { withTranslation } from 'react-i18next';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import Message from '../../components/Message/Message';
 import * as actions from '../../store/actions/index';
@@ -23,9 +24,9 @@ class Messages extends Component {
         editMode: false,
         messageId: null
     }
-    
+
     componentDidMount() {
-        if(!this.props.messages){
+        if (!this.props.messages && !this.props.loading) {
             this.props.onGetMessages();
         }
     }
@@ -57,12 +58,16 @@ class Messages extends Component {
         this.props.onGetMessages();
     }
 
+    getMoreMessage = () => {
+        this.props.onGetMoreMessage();
+    }
+
     render() {
         let messages = null;
-        const {t} = this.props;
+        const { t } = this.props;
 
-        if(this.props.loading){
-            messages = <Grid item><Spinner/></Grid>;
+        if (this.props.loading) {
+            messages = <Grid item><Spinner /></Grid>;
         } else if (this.props.error) {
             messages = (
                 <Grid item>
@@ -71,9 +76,9 @@ class Messages extends Component {
             );
         }
         else if (this.props.messages) {
-            messages = this.props.messages.map(
+            const messagesArr = this.props.messages.map(
                 message => (
-                    <Grid item key={message.id} 
+                    <Grid item key={message.id}
                         xs={12} sm={10}
                     >
                         <Message {...message}
@@ -81,17 +86,53 @@ class Messages extends Component {
                                 this.props.authenticated
                                 && this.props.userId === message.userId
                             }
-                            onEditClicked={() => {this.handleEditClick(message.id)}}
+                            onEditClicked={() => { this.handleEditClick(message.id) }}
                         />
                     </Grid>
                 )
             );
+
+            let moreError = null;
+
+            if(this.props.moreError){
+                moreError = (
+                    <Grid item xs={12} sm={10}>
+                        <ErrorCard onAction={this.getMoreMessage} actionText={t('general.refresh')} />
+                    </Grid>
+                );
+            }
+
+            messages = (
+                <React.Fragment>
+                    <InfiniteScroll
+                        dataLength={this.props.messages.length}
+                        next={this.getMoreMessage}
+                        hasMore={this.props.hasMoreMessages}
+                        loader={
+                            <Grid item xs={12} sm={10}>
+                                <Spinner />
+                            </Grid>
+                        }
+                        style={{
+                            justifyContent: 'center',
+                            width: '100%',
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            boxSizing: 'border-box'
+                        }}
+                    // scrollableTarget="messages-grid-container"
+                    >
+                        {messagesArr}
+                    </InfiniteScroll>
+                    {moreError}
+                </React.Fragment>
+            );
         }
 
         let editModal = null;
-        if(this.state.editMode){
+        if (this.state.editMode) {
             editModal = (
-                <UpdateMessage 
+                <UpdateMessage
                     show={this.state.editMode}
                     messageId={this.state.messageId}
                     onCancel={this.handleCancel}
@@ -100,12 +141,13 @@ class Messages extends Component {
             );
         }
 
-        return(
-            <ContentContainer>
-                <Grid container justify="center" className={this.props.classes.root}>
-                    {/* <Grid item xs={12}> */}
+        return (
+            <ContentContainer id="messages-grid-container">
+                <Grid container justify="center" className={this.props.classes.root}
+                    
+                >
+
                     {messages}
-                    {/* </Grid> */}
                 </Grid>
                 {editModal}
             </ContentContainer>
@@ -123,6 +165,8 @@ const mapStateToProps = state => {
         messages: state.messages.messages,
         loading: state.messages.loading,
         error: state.messages.error,
+        hasMoreMessages: state.messages.hasMoreMessages,
+        moreError: state.messages.moreError,
 
         authenticated: state.auth.authenticated,
         userId: state.auth.userId
@@ -132,9 +176,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetMessages: () => dispatch(actions.getMessages()),
-        onGetMessage: (messageId) => dispatch(actions.getMessage(messageId))
+        onGetMessage: (messageId) => dispatch(actions.getMessage(messageId)),
+        onGetMoreMessage: () => dispatch(actions.getMoreMessages())
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
-(withTranslation()(withStyles(styles)(Messages)));
+    (withTranslation()(withStyles(styles)(Messages)));

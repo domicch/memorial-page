@@ -135,7 +135,7 @@ class CreateMessage extends Component {
         });
 
         this.props.onCreateMessageReset();
-        this.props.onGetMessages();
+        this.props.onGetMoreMessages();
         this.props.history.push("/messages");
     }
 
@@ -381,7 +381,8 @@ const mapDispatchToProps = dispatch => {
         onCreateMessage: (userId, message, imageFiles) => dispatch(actions.createMessage(userId, message, imageFiles)),
         onCreateMessageReset: () => dispatch(actions.createMessageReset()),
         onGoogleLogin: () => dispatch(actions.googleLogin()),
-        onGetMessages: () => dispatch(actions.getMessages())
+        onGetMessages: () => dispatch(actions.getMessages()),
+        onGetMoreMessages: () => dispatch(actions.getMoreMessages())
     }
 }
 

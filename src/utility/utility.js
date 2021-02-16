@@ -11,6 +11,10 @@ export const updateArray = (oldArray, newObject, index) => {
     return newArray;
 }
 
+export const appendArray = (oldArray, newArray) => {
+    return [...oldArray, ...newArray];
+}
+
 export const checkFormFieldValid = (value, rules) => {
     let isValid = true;
     if (!rules) {

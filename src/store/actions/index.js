@@ -15,7 +15,8 @@ export {
 } from './updateArticle';
 
 export {
-    getMessages
+    getMessages,
+    getMoreMessages
 } from './messages';
 
 export {
