@@ -9,7 +9,7 @@ https://mhchan.page
 
 ## High-level architecture diagram
 
-A diagram is available for have a high-level understanding of React architecture @ https://github.com/domicch/memorial-page/blob/master/system-design/system-design.drawio
+A diagram is available for have a high-level understanding of React architecture @ https://github.com/domicch/memorial-page/blob/master/system-design/system-design-components.jpg
 
 ## Project Setup
 
