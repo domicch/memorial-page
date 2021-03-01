@@ -1,3 +1,3 @@
 #!/bin/sh
 
-firebase deploy
+firebase deploy -P prd

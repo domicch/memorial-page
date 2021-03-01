@@ -4,4 +4,7 @@ firebase init
 
 firebase apps:create
 
-firebase apps:sdkconfig WEB 1:534523350857:web:3ab0b099800e47bdda9498 > src/base.js
+firebase apps:sdkconfig WEB <Firebase App ID> > src/base.js
+
+# add alias to the project (e.g. for identify environment and apply env variables)
+firebase use --add
