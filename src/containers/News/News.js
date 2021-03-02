@@ -135,12 +135,6 @@ class News extends Component {
                                 地址：紅磡暢行道八號<br/>
                                 電話：2303 1234<br/>
                                 <br/>
-                                追思會及安息禮拜直播連結:<br/>
-                                請使用 Zoom 軟件登入:<br/>
-                                <a href="https://zoom.us/j/95595672038">https://zoom.us/j/95595672038</a><br/>
-                                <br/>
-                                Meeting ID: 955 9567 2038<br/>
-                                Passcode: 20210226<br/><br/>
                                 <a href="https://firebasestorage.googleapis.com/v0/b/dad-page.appspot.com/o/news%2Fbrochure.pdf?alt=media&token=459fd5b2-780f-4f8f-ae02-ac5738848af9">程序表</a><br/><br/>
                                 
                                 
