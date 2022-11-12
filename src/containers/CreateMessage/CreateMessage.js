@@ -135,7 +135,8 @@ class CreateMessage extends Component {
         });
 
         this.props.onCreateMessageReset();
-        this.props.onGetMoreMessages();
+        //reload all messages to show the latest
+        this.props.onGetMessages();
         this.props.history.push("/messages");
     }
 

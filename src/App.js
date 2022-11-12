@@ -25,7 +25,7 @@ class App extends Component {
         <Route path="/messages" component={Messages} />
         <Route path="/newmessage" component={CreateMessage} />
         <Route path="/newarticle" component={CreateArticle} />
-        <Route path="/" component={News} />
+        <Route path="/" component={LifeReview} />
       </Switch>
     );
 

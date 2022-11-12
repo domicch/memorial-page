@@ -39,4 +39,6 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-
+### Last successful npm version
+npm 8.19.2
+nodel v16.18.1

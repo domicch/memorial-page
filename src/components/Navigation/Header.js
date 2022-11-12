@@ -101,16 +101,10 @@ const Header = (props) => {
         <Link to="/newmessage">New Message</Link> */}
                 <Tabs value={tabsValue}>
                     <Tab
-                        label={t('toolbar.news')}
+                        label={t('toolbar.life')}
                         component={Link}
                         to="/"
                         value="/"
-                    />
-                    <Tab
-                        label={t('toolbar.life')}
-                        component={Link}
-                        to="/lifereview"
-                        value="/lifereview"
                     />
                     <Tab
                         label={t('toolbar.messages')}

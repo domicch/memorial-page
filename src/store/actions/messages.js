@@ -52,7 +52,7 @@ export const getMessages = () => {
         dispatch(getMessagesStart());
 
         try{
-            let snapshot = await app.firestore().collection("messages").orderBy("order").limit(BATCH_SIZE).get();
+            let snapshot = await app.firestore().collection("messages").orderBy("order","desc").limit(BATCH_SIZE).get();
             const messages = [];
             let lastMessageSnapshot = null;
             let hasMoreMessages = false;
@@ -69,7 +69,7 @@ export const getMessages = () => {
             }
 
             if(lastMessageSnapshot){
-                snapshot = await app.firestore().collection("messages").where("order", ">", lastMessageSnapshot.data().order).get();
+                snapshot = await app.firestore().collection("messages").where("order", "<", lastMessageSnapshot.data().order).get();
                 if(!snapshot.empty){
                     hasMoreMessages = true;
                 }
@@ -94,13 +94,13 @@ export const getMoreMessages = () => {
             
             if(lastMessageSnapshot){
                 snapshot = await app.firestore().collection("messages")
-                    .orderBy("order")
+                    .orderBy("order","desc")
                     .startAfter(lastMessageSnapshot)
                     .limit(BATCH_SIZE)
                     .get();
             }else{
                 snapshot = await app.firestore().collection("messages")
-                    .orderBy("order")
+                    .orderBy("order","desc")
                     .limit(BATCH_SIZE)
                     .get();
             }
@@ -119,7 +119,7 @@ export const getMoreMessages = () => {
             }
 
             if(lastMessageSnapshot){
-                snapshot = await app.firestore().collection("messages").where("order", ">", lastMessageSnapshot.data().order).get();
+                snapshot = await app.firestore().collection("messages").where("order", "<", lastMessageSnapshot.data().order).get();
                 if(!snapshot.empty){
                     hasMoreMessages = true;
                 }
