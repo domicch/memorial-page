@@ -13,3 +13,6 @@ gsutil cp -r gs://dad-page-export/2021-02-13T00:16:11_47688 gs://dad-page-import
 # import data
 gcloud config set project react-burger-app-d02b2
 gcloud firestore import gs://dad-page-import/2021-02-13T00:16:11_47688
+
+# zip the file and download
+zip -r data-page-export.zip dad-page-export
